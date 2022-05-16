@@ -18,3 +18,4 @@ function connectDB() {
 
     return $conn;
 }
+$conn = connectDB();
