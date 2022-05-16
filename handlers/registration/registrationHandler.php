@@ -14,7 +14,7 @@ if (isset($arr)) {
     $dateOfBirth = $arr['dateOfBirth'];
     $password = $arr['password'];
 
-    echo "invalid_email";;
+    echo "invalid_email";
     // echo password_hash($password, PASSWORD_DEFAULT);
 
     /**
