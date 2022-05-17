@@ -36,10 +36,10 @@ if (isset($arr)) {
             mysqli_stmt_execute($stmt);
             
             //All value's that will be send back to the application
-            $userValues['id'] = mysqli_insert_id($conn);
-            $userValues['name'] = $name;
-            $userValues['email'] = $email;
-            $userValues['dateOfBirthdateOfBirth'] = $dateOfBirth;
+            $userValues[0]['id'] = mysqli_insert_id($conn);
+            $userValues[0]['name'] = $name;
+            $userValues[0]['email'] = $email;
+            $userValues[0]['dateOfBirth'] = $dateOfBirth;
             // $userValues['password'] = $password; //Probaly won't send...
     
             //Close the statement and connection
@@ -60,30 +60,30 @@ if (isset($arr)) {
 function validateFields ($name, $email, $dateOfBirth, $password, $confirmPassword) {
     $error = array();
 
-    if (!isset($name) || !filter_var($name, FILTER_SANITIZE_SPECIAL_CHARS)) {
+    if (!isset($name) || !filter_var($name, FILTER_SANITIZE_SPECIAL_CHARS) || !preg_match('/^[A-Za-z][A-Za-z0-9]{0,49}$/', $name)) {
         $error[] = 'name_incorrect';
     }
     if (!isset($email) || !filter_var($email, FILTER_SANITIZE_EMAIL)) {
         $error[] = 'email_incorrect';
     }
     //Hier regex voor datum <----------------------------------!-!------------------------------------->
-    if (!isset($dateOfBirth) || !filter_var($dateOfBirth, FILTER_SANITIZE_SPECIAL_CHARS)) {
+    if (!isset($dateOfBirth) || !filter_var($dateOfBirth, FILTER_SANITIZE_SPECIAL_CHARS) || !preg_match('/^\d{4}\-(0?[1-9]|1[012])\-(0?[1-9]|[12][0-9]|3[01])$/', $dateOfBirth)) {
         $error[] = 'dateOfBirth_incorrect';
     }
-    if (!isset($password) || !filter_var($password, FILTER_SANITIZE_SPECIAL_CHARS)) {
+    if (!isset($password) || !filter_var($password, FILTER_SANITIZE_SPECIAL_CHARS) || !preg_match('/^[A-Za-z][A-Za-z0-9]{0,254}$/', $password)) {
         $error[] = 'password_incorrect';
     }
-    if (!isset($confirmPassword) || !filter_var($confirmPassword, FILTER_SANITIZE_SPECIAL_CHARS)) {
+    if (!isset($confirmPassword) || !filter_var($confirmPassword, FILTER_SANITIZE_SPECIAL_CHARS) || !preg_match('/^[A-Za-z][A-Za-z0-9]{0,254}$/', $confirmPassword)) {
         $error[] = 'confirmPassword_incorrect';
     }
     if ($password != $confirmPassword) {
         $error[] = 'samePassword_incorrect';
     }
 
-    if (empty($error)) {
-        return false;
-    } else {
+    if (!empty($error)) {
         return $error;
+    } else {
+        return false;
     }
 }
 
@@ -91,8 +91,7 @@ function validateFields ($name, $email, $dateOfBirth, $password, $confirmPasswor
  * Function to check if user already exists in database
  */
 function checkEmailInDataBase($conn, $email) {
-    global $error;
-    global $message;
+    $error = array();
 
     $query = "SELECT * FROM user WHERE email = ?";
 
@@ -110,7 +109,6 @@ function checkEmailInDataBase($conn, $email) {
         return $error;
     } else {
         mysqli_stmt_close($stmt);
-        mysqli_close($conn);
         return false;
     }
 }
