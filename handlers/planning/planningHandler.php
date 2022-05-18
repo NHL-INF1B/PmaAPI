@@ -9,47 +9,63 @@ $json = file_get_contents('php://input');
 $arr = json_decode($json, TRUE); 
 
 if (isset($arr)) {
-    $planning = htmlentities($arr['planning']);
-    // $id = htmlentities($arr['id']);
-    $week = htmlentities($arr['week']);
-    $activiteit = htmlentities($arr['activiteit']);
-    $project_id = htmlentities($arr['project_id']);
+    // $planning = htmlentities($arr['planning']);
+    // $week = htmlentities($arr['week']);
+    // $activiteit = htmlentities($arr['activiteit']);
+    // $project_id = htmlentities($arr['project_id']);
+
+    $planning = "test";
+    $activiteit = "test";
+    $week = 1;
+    $project_id = 1;
+
+    $query = "INSERT INTO schedule_line (week, activiteit, project_id) VALUES (?,?,?)";
+
+    //Sending data to the database
+    $stmt = mysqli_prepare($conn, $query);
+    mysqli_stmt_bind_param($stmt, "isi", $week, $activiteit, $project_id);
+    mysqli_stmt_execute($stmt);
+    
+    //All value's that will be send back to the application
+    $PlanningValues[0]['id'] = mysqli_insert_id($conn);
+    $PlanningValues[0]['week'] = $week;
+    $PlanningValues[0]['activiteit'] = $activiteit;
+    $PlanningValues[0]['project_id'] = $project_id;
+
+    //Close the statement and connection
+    mysqli_stmt_close($stmt);
+    mysqli_close($conn);
+
+    //Send back response (JSON)
+    echo json_encode($PlanningValues);
 
     //Validate fields
-    if ($error = validateFields($planning, $week, $activiteit, $project_id)) {
-        echo json_encode($error);
+    // if ($error = validateFields($planning, $week, $activiteit, $project_id)) {
+    //     echo json_encode($error);
     // } else {
-    //     //Verify act$activiteit does not exist
-    //     if ($error = checkact$activiteitInDataBase($conn, $planning)) {
-    //         echo json_encode($error);
-    //     } else {
-    //         $planning = "";
-    //        // $id = "";
-    //         $week = "";
-    //         $activiteit = "";
-    //         $project_id = "";
+    //     $week = 1;
+    //     $project_id = 1;
+
+    //     $query = "INSERT INTO shedule_line (week, activiteit, project_id) VALUES (?,?,?)";
     
-            $query = "INSERT INTO shedule_line (week, activiteit, project_id) VALUES (?,?,?)";
-    
-            //Sending data to the database
-            $stmt = mysqli_prepare($conn, $query);
-            mysqli_stmt_bind_param($stmt, "isi", $week, $activiteit, $project_id);
-            mysqli_stmt_execute($stmt);
-            
-            //All value's that will be send back to the application
-            $PlanningValues[0]['id'] = mysqli_insert_id($conn);
-            $PlanningValues[0]['week'] = $week;
-            $PlanningValues[0]['activiteit'] = $activiteit;
-            $PlanningValues[0]['project_id'] = $project_id;
-    
-            //Close the statement and connection
-            mysqli_stmt_close($stmt);
-            mysqli_close($conn);
-    
-            //Send back response (JSON)
-            echo json_encode($PlanningValues);
-        }
-  //  }
+    //     //Sending data to the database
+    //     $stmt = mysqli_prepare($conn, $query);
+    //     mysqli_stmt_bind_param($stmt, "isi", $week, $activiteit, $project_id);
+    //     mysqli_stmt_execute($stmt);
+        
+    //     //All value's that will be send back to the application
+    //     $PlanningValues[0]['id'] = mysqli_insert_id($conn);
+    //     $PlanningValues[0]['week'] = $week;
+    //     $PlanningValues[0]['activiteit'] = $activiteit;
+    //     $PlanningValues[0]['project_id'] = $project_id;
+
+    //     //Close the statement and connection
+    //     mysqli_stmt_close($stmt);
+    //     mysqli_close($conn);
+
+    //     //Send back response (JSON)
+    //     echo json_encode($PlanningValues);
+    // }
 } else {
     echo json_encode('No data send');
 }
@@ -60,14 +76,14 @@ if (isset($arr)) {
 function validateFields ($week, $activiteit, $project_id) {
     $error = array();
 
-    if (!isset($week) || !filter_var($week, FILTER_SANITIZE_SPECIAL_CHARS) || !preg_match('/^[A-Za-z][A-Za-z0-9]{0,49}$/', $week)) {
+    if (!isset($week) || !filter_var($week, FILTER_SANITIZE_SPECIAL_CHARS)) {
         $error[] = 'week_incorrect';
     }
     if (!isset($activiteit) || !filter_var($activiteit, FILTER_SANITIZE_SPECIAL_CHARS)) {
         $error[] = 'activiteit_incorrect';
     }
     
-    if (!isset($project_id) || !filter_var($project_id, FILTER_SANITIZE_SPECIAL_CHARS) || !preg_match('/^\d{4}\-(0?[1-9]|1[012])\-(0?[1-9]|[12][0-9]|3[01])$/', $project_id)) {
+    if (!isset($project_id) || !filter_var($project_id, FILTER_SANITIZE_SPECIAL_CHARS)) {
         $error[] = 'project_id_incorrect';
     }
     
