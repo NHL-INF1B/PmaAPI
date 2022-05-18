@@ -23,14 +23,13 @@ if (isset($arr)) {
         if ($error = checkEmailInDataBase($conn, $email)) {
             echo json_encode($error);
         } else {
+            $userValues = array();
             $password = password_hash($password, PASSWORD_DEFAULT);
             $phoneNumber = "";
             $discord = "";
-            $userValues = array();
-    
-            $query = "INSERT INTO user (name, email, password, dateOfBirth, phoneNumber, discord) VALUES (?,?,?,?,?,?)";
     
             //Sending data to the database
+            $query = "INSERT INTO user (name, email, password, dateOfBirth, phoneNumber, discord) VALUES (?,?,?,?,?,?)";
             $stmt = mysqli_prepare($conn, $query);
             mysqli_stmt_bind_param($stmt, "ssssss", $name, $email, $password, $dateOfBirth, $phoneNumber, $discord);
             mysqli_stmt_execute($stmt);
@@ -70,10 +69,10 @@ function validateFields ($name, $email, $dateOfBirth, $password, $confirmPasswor
     if (!isset($dateOfBirth) || !filter_var($dateOfBirth, FILTER_SANITIZE_SPECIAL_CHARS) || !preg_match('/^\d{4}\-(0?[1-9]|1[012])\-(0?[1-9]|[12][0-9]|3[01])$/', $dateOfBirth)) {
         $error[] = 'dateOfBirth_incorrect';
     }
-    if (!isset($password) || !filter_var($password, FILTER_SANITIZE_SPECIAL_CHARS) || !preg_match('/^[A-Za-z][A-Za-z0-9]{0,254}$/', $password)) {
+    if (!isset($password) || !filter_var($password, FILTER_SANITIZE_SPECIAL_CHARS) || !preg_match('/^(?=.*[!@#$%^&*])[A-Za-z0-9!@#$%^&*]{6,254}+$/', $password)) {
         $error[] = 'password_incorrect';
     }
-    if (!isset($confirmPassword) || !filter_var($confirmPassword, FILTER_SANITIZE_SPECIAL_CHARS) || !preg_match('/^[A-Za-z][A-Za-z0-9]{0,254}$/', $confirmPassword)) {
+    if (!isset($confirmPassword) || !filter_var($confirmPassword, FILTER_SANITIZE_SPECIAL_CHARS) || !preg_match('/^(?=.*[!@#$%^&*])[A-Za-z0-9!@#$%^&*]{6,254}+$/', $confirmPassword)) {
         $error[] = 'confirmPassword_incorrect';
     }
     if ($password != $confirmPassword) {
