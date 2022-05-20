@@ -12,7 +12,7 @@ if (isset($arr)) {
     $title = htmlentities($arr['title']);
     $description = htmlentities($arr['description']);
     $date = htmlentities($arr['date']);
-    $time_start = htmlentities($arr['time_start']);
+    $time_start = date("Y-m-d H:i:s"); 
     $time_end = htmlentities($arr['time_end']);
     $user_id = 1;
     $project_id = 1;
@@ -25,21 +25,21 @@ if (isset($arr)) {
     mysqli_stmt_execute($stmt);
 
     //All value's that will be send back to the application
-    $HourEditValues[0]['id'] = mysqli_insert_id($conn);
-    $HourEditValues[0]['title'] = $title;
-    $HourEditValues[0]['description'] = $description;
-    $HourEditValues[0]['date'] = $date;
-    $HourEditValues[0]['time_start'] = $time_start;
-    $HourEditValues[0]['time_end'] = $time_end;
-    $HourEditValues[0]['user_id'] = $user_id;
-    $HourEditValues[0]['project_id'] = $project_id;
+    $HourEditStartValues[0]['id'] = mysqli_insert_id($conn);
+    $HourEditStartValues[0]['title'] = $title;
+    $HourEditStartValues[0]['description'] = $description;
+    $HourEditStartValues[0]['date'] = $date;
+    $HourEditStartValues[0]['time_start'] = $time_start;
+    $HourEditStartValues[0]['time_end'] = $time_end;
+    $HourEditStartValues[0]['user_id'] = $user_id;
+    $HourEditStartValues[0]['project_id'] = $project_id;
 
     //Close the statement and connection
     mysqli_stmt_close($stmt);
     mysqli_close($conn);
 
     //Send back response (JSON)
-    echo json_encode($HourEditValues);   
+    echo json_encode($HourEditStartValues);   
 }
 
 /**
