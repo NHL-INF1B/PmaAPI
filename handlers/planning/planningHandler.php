@@ -10,25 +10,25 @@ $arr = json_decode($json, TRUE);
 
 if (isset($arr)) {
     // $planning = htmlentities($arr['planning']);
-    // $week = htmlentities($arr['week']);
-    // $activiteit = htmlentities($arr['activiteit']);
+    $weekNummer = htmlentities($arr['week']);
+    $activiteit = htmlentities($arr['activiteit']);
     // $project_id = htmlentities($arr['project_id']);
 
-    $planning = "test";
-    $activiteit = "test";
-    $week = 1;
+    // $planning = "test";
+    // $activiteit = "test";
+    // $week = 1;
     $project_id = 1;
 
     $query = "INSERT INTO schedule_line (week, activiteit, project_id) VALUES (?,?,?)";
 
     //Sending data to the database
     $stmt = mysqli_prepare($conn, $query);
-    mysqli_stmt_bind_param($stmt, "isi", $week, $activiteit, $project_id);
+    mysqli_stmt_bind_param($stmt, "isi", $weekNummer, $activiteit, $project_id);
     mysqli_stmt_execute($stmt);
     
     //All value's that will be send back to the application
     $PlanningValues[0]['id'] = mysqli_insert_id($conn);
-    $PlanningValues[0]['week'] = $week;
+    $PlanningValues[0]['week'] = $weekNummer;
     $PlanningValues[0]['activiteit'] = $activiteit;
     $PlanningValues[0]['project_id'] = $project_id;
 
@@ -73,10 +73,10 @@ if (isset($arr)) {
 /**
  * Function to validate fields
  */
-function validateFields ($week, $activiteit, $project_id) {
+function validateFields ($weekNummer, $activiteit, $project_id) {
     $error = array();
 
-    if (!isset($week) || !filter_var($week, FILTER_SANITIZE_SPECIAL_CHARS)) {
+    if (!isset($week) || !filter_var($weekNummer, FILTER_SANITIZE_SPECIAL_CHARS)) {
         $error[] = 'week_incorrect';
     }
     if (!isset($activiteit) || !filter_var($activiteit, FILTER_SANITIZE_SPECIAL_CHARS)) {
