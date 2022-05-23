@@ -9,27 +9,26 @@ $json = file_get_contents('php://input');
 $arr = json_decode($json, TRUE); 
 
 if (isset($arr)) {
-    // $planning = htmlentities($arr['planning']);
-    // $week = htmlentities($arr['week']);
-    // $activiteit = htmlentities($arr['activiteit']);
-    // $project_id = htmlentities($arr['project_id']);
+    // $name = htmlentities($arr['name']);
+    // $qrcode = htmlentities($arr['qrcode']);
+    $teamcode = htmlentities($arr['teamcode']);
 
     //$planning = "test";
-    $name = "test";
-    $qrcode = 1;
-    $teamcode = 1;
+    // $name = "Test";
+    // $qrcode = "test";
+    // $teamcode = 1;
 
-    $query = "INSERT INTO project (name, qrcode, teamcode) VALUES (?,?,?)";
+    $query = "INSERT INTO project (teamcode) VALUES (?)";
 
     //Sending data to the database
     $stmt = mysqli_prepare($conn, $query);
-    mysqli_stmt_bind_param($stmt, "ss", $name, $qrcode, $teamcode);
+    mysqli_stmt_bind_param($stmt, "s", $teamcode);
     mysqli_stmt_execute($stmt);
     
     //All value's that will be send back to the application
     $PlanningValues[0]['id'] = mysqli_insert_id($conn);
-    $PlanningValues[0]['name'] = $name;
-    $PlanningValues[0]['qrcode'] = $qrcode;
+    // $PlanningValues[0]['name'] = $name;
+    // $PlanningValues[0]['qrcode'] = $qrcode;
     $PlanningValues[0]['teamcode'] = $teamcode;
 
     //Close the statement and connection
@@ -73,26 +72,26 @@ if (isset($arr)) {
 /**
  * Function to validate fields
  */
-function validateFields ($name, $qrcode, $teamcode) {
-    $error = array();
+// function validateFields ($name, $qrcode, $teamcode) {
+//     $error = array();
 
-    if (!isset($name) || !filter_var($name, FILTER_SANITIZE_SPECIAL_CHARS)) {
-        $name[] = 'name_incorrect';
-    }
-    if (!isset($qrcode) || !filter_var($name, FILTER_SANITIZE_SPECIAL_CHARS)) {
-        $name[] = 'qrcode_incorrect';
-    }
+//     if (!isset($name) || !filter_var($name, FILTER_SANITIZE_SPECIAL_CHARS)) {
+//         $name[] = 'name_incorrect';
+//     }
+//     if (!isset($qrcode) || !filter_var($qrcode, FILTER_SANITIZE_SPECIAL_CHARS)) {
+//         $qrcode[] = 'qrcode_incorrect';
+//     }
     
-    if (!isset($teamcode) || !filter_var($teamcode, FILTER_SANITIZE_SPECIAL_CHARS)) {
-        $teamcode[] = 'teamcode_incorrect';
-    }
+//     if (!isset($teamcode) || !filter_var($teamcode, FILTER_SANITIZE_SPECIAL_CHARS)) {
+//         $teamcode[] = 'teamcode_incorrect';
+//     }
     
-    if (!empty($error)) {
-        return $error;
-    } else {
-        return false;
-    }
-}
+//     if (!empty($error)) {
+//         return $error;
+//     } else {
+//         return false;
+//     }
+// }
 
 /**
  * Function to check if Planning already exists in database
@@ -119,3 +118,115 @@ function validateFields ($name, $qrcode, $teamcode) {
 //         return false;
 //     }
 // }
+
+  if(!empty($_FILES['file_attachment']['name']))
+  {
+    $target_dir = "uploads/";
+    if (!file_exists($target_dir))
+    {
+      mkdir($target_dir, 0777);
+    }
+    $target_file =
+      $target_dir . basename($_FILES["file_attachment"]["name"]);
+    $imageFileType = 
+      strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
+    // Check if file already exists
+    if (file_exists($target_file)) {
+      echo json_encode(
+         array(
+           "status" => 0,
+           "data" => array()
+           ,"msg" => "Sorry, file already exists."
+         )
+      );
+      die();
+    }
+    // Check file size
+    if ($_FILES["file_attachment"]["size"] > 50000000) {
+      echo json_encode(
+         array(
+           "status" => 0,
+           "data" => array(),
+           "msg" => "Sorry, your file is too large."
+         )
+       );
+      die();
+    }
+    if (
+      move_uploaded_file(
+        $_FILES["file_attachment"]["tmp_name"], $target_file
+      )
+    ) {
+      echo json_encode(
+        array(
+          "status" => 1,
+          "data" => array(),
+          "msg" => "The file " . 
+                   basename( $_FILES["file_attachment"]["name"]) .
+                   " has been uploaded."));
+    } else {
+      echo json_encode(
+        array(
+          "status" => 0,
+          "data" => array(),
+          "msg" => "Sorry, there was an error uploading your file."
+        )
+      );
+    }
+  }
+
+/*  Update Images*/
+// class MyClass {
+
+
+// public function uploadImage() {	
+//     if(!empty($_FILES['file_attachment']['name'])) {
+//       $res        = array();
+//       $name       = 'file_attachment';
+//       $imagePath 	= 'assets/upload/file_attachment';
+//       $temp       = explode(".",$_FILES['file_attachment']['name']);
+//       $extension 	= end($temp);
+//       $filenew 	= str_replace(
+//                       $_FILES['file_attachment']['name'],
+//                       $name,
+//                       $_FILES['file_attachment']['name']) . 
+//                       '_' . time() . '' . "." . $extension;  		
+//       $config['file_name']   = $filenew;
+//       $config['upload_path'] = $imagePath;
+//       $this->upload->initialize($config);
+//       $this->upload->set_allowed_types('*');
+//       $this->upload->set_filename($config['upload_path'],$filenew);
+//       if(!$this->upload->do_upload('file_attachment')) {
+//         $data = array('msg' => $this->upload->display_errors());
+//       } else {
+//         $data = $this->upload->data();	
+//         if(!empty($data['file_name'])){
+//           $res['image_url'] = 'assets/upload/file_attachment/' .
+//                               $data['file_name']; 
+//         }
+//         if (!empty($res)) {
+//       echo json_encode(
+//             array(
+//               "status" => 1,
+//               "data" => array(),
+//               "msg" => "upload successfully",
+//              // "base_url" => base_url(),
+//               "count" => "0"
+//             )
+//           );
+//         }else{
+//       echo json_encode(
+//             array(
+//               "status" => 1,
+//               "data" => array(),
+//               "msg" => "not found",
+//             //  "base_url" => base_url(),
+//               "count" => "0"
+//             )
+//           );
+//         }
+//       }
+//     }
+//   }
+// }
+?>
