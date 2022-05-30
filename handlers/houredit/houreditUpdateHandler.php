@@ -16,7 +16,7 @@ if (isset($arr)) {
 
     $time_end = date("Y-m-d H:i:s");
 
-    $query = "UPDATE timesheet SET time_end = ? WHERE id = ?";
+    $query = "UPDATE timesheet SET time_end = ? WHERE id = 1";
 
     //Sending data to the database
     $stmt = mysqli_prepare($conn, $query);
@@ -33,7 +33,6 @@ if (isset($arr)) {
     $HourEditUpdateValues[0]['user_id'] = $user_id;
     $HourEditUpdateValues[0]['project_id'] = $project_id;
 
-    echo $time_start -
     //Close the statement and connection
     mysqli_stmt_close($stmt);
     mysqli_close($conn);
