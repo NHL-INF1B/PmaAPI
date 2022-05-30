@@ -12,7 +12,7 @@ if (isset($arr)) {
     $name = htmlentities($arr['name']);
 
     //Requesting data from the database
-    $query = "UPDATE `project` SET `name` = ? WHERE `project`.`id` = 1;";
+    $query = "DELETE * FROM `project` WHERE `project`.`id` = 1;";
     $stmt = mysqli_prepare($conn, $query);
     mysqli_stmt_bind_param($stmt, "s", $name);
     mysqli_stmt_execute($stmt);
