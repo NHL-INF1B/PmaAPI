@@ -26,23 +26,23 @@ if (isset($arr)) {
         mysqli_stmt_bind_result($stmt, $id, $week, $activity);
         while (mysqli_stmt_fetch($stmt)) {}
 
-                //Checking schedule line
-                if (mysqli_stmt_num_rows($stmt) > 0) {
-                    //All value's that will be send back to the application
-                    $scheduleValues[0]['id'] = $id;
-                    $scheduleValues[0]['week'] = $week;
-                    $scheduleValues[0]['activity'] = $activity;
+        //Checking schedule line
+        if (mysqli_stmt_num_rows($stmt) > 0) {
+            //All value's that will be send back to the application
+            $scheduleValues[0]['id'] = $id;
+            $scheduleValues[0]['week'] = $week;
+            $scheduleValues[0]['activity'] = $activity;
 
-                    //Close the statement and connection
-                    mysqli_stmt_close($stmt);
-                    mysqli_close($conn);
+            //Close the statement and connection
+            mysqli_stmt_close($stmt);
+            mysqli_close($conn);
 
-                    //Send back response (JSON)
-                    echo json_encode($scheduleValues);
-                } else {
-                    $error[] = 'Schedule line does not exists';
-                    echo json_encode($error);
-                }
+            //Send back response (JSON)
+            echo json_encode($scheduleValues);
+        } else {
+            $error[] = 'Schedule line does not exists';
+            echo json_encode($error);
+        }
     }
 } else {
     echo json_encode('No data send');
