@@ -8,20 +8,23 @@ $arr = json_decode($json, TRUE);
 if(isset($arr)){
     // $userId = htmlentities($arr["userId"]);
     $userId = 1;
+    $projectValues = array();
+
+    $query = "SELECT pm.project_id, pm.role_id, pm.reward_points, p.name FROM projectmember as pm INNER JOIN project as p ON pm.project_id = p.id WHERE user_id = ?";
+
+    if(!$stmt = mysqli_prepare($conn, $query)){
+        echo "DB error: " . mysqli_error($conn);
+        die();
+    }
+
+    if(!mysqli_stmt_bind_param($stmt, "i", $userId) || !mysqli_stmt_execute($stmt)){
+        echo "DB error: " . mysqli_error($conn);
+    }
+
+    $res = mysqli_stmt_get_result($stmt);
+    $result = mysqli_fetch_all($res, MYSQLI_ASSOC);
+
+    echo json_encode($result);
+} else{
+    echo json_encode("No data send");
 }
-
-$sql = "SELECT project_id FROM projectmember WHERE user_id = 1";
-$stmt = mysqli_prepare($conn, $sql);
-mysqli_stmt_execute($stmt);
-mysqli_stmt_store_result($stmt);
-mysqli_stmt_bind_result($stmt, $projectId);
-
-echo "\n";
-$query = mysqli_query($conn, $sql);
-$result = array();
-
-while ($res = mysqli_fetch_assoc($query)){
-    $result[] = $res;
-}
-
-echo json_encode($result);
