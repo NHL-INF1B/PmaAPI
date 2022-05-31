@@ -7,10 +7,10 @@ $arr = json_decode($json, TRUE);
 
 if(isset($arr)){
     // $userId = htmlentities($arr["userId"]);
-    $userId = 1;
+    $userId = 2;
     $projectValues = array();
 
-    $query = "SELECT pm.project_id, pm.role_id, pm.reward_points, p.name FROM projectmember as pm INNER JOIN project as p ON pm.project_id = p.id WHERE user_id = ?";
+    $query = "SELECT pm.project_id, pm.role_id, p.name FROM projectmember as pm INNER JOIN project as p ON pm.project_id = p.id WHERE user_id = ?";
 
     if(!$stmt = mysqli_prepare($conn, $query)){
         echo "DB error: " . mysqli_error($conn);
