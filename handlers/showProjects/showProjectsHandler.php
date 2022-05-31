@@ -10,7 +10,7 @@ if(isset($arr)){
     $userId = 1;
 }
 
-$sql = "SELECT project_id FROM projectmember WHERE user_id = 1[";
+$sql = "SELECT project_id FROM projectmember WHERE user_id = 1";
 $stmt = mysqli_prepare($conn, $sql);
 mysqli_stmt_execute($stmt);
 mysqli_stmt_store_result($stmt);
