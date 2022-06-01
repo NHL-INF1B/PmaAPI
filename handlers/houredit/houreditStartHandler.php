@@ -45,7 +45,7 @@ if (isset($arr)) {
         echo json_encode($HourEditStartValues);   
     }
 } else {
-    echo json_encode('No data send');
+    echo json_encode('No data sent');
 }
 
 /**

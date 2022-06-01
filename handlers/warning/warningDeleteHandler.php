@@ -10,10 +10,10 @@ mysqli_stmt_bind_param($stmt, "i", $id);
 mysqli_stmt_execute($stmt);
 
 //All value's that will be send back to the application
-$WarningDeleteValues[0]['id'] = $id;
-$WarningDeleteValues[0]['reason'] = $reason;
-$WarningDeleteValues[0]['user_id'] = $user_id;
-$WarningDeleteValues[0]['project_id'] = $project_id;
+$WarningDeleteValues['id'] = $id;
+$WarningDeleteValues['reason'] = $reason;
+$WarningDeleteValues['user_id'] = $user_id;
+$WarningDeleteValues['project_id'] = $project_id;
 
 //Close the statement and connection
 mysqli_stmt_close($stmt);

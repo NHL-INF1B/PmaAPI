@@ -20,10 +20,8 @@ if (isset($arr)) {
         mysqli_stmt_execute($stmt);
 
         //All value's that will be send back to the application
-        $WarningUpdateValues[0]['id'] = $id;
-        $WarningUpdateValues[0]['reason'] = $reason;
-        $WarningUpdateValues[0]['user_id'] = $user_id;
-        $WarningUpdateValues[0]['project_id'] = $project_id;
+        $WarningUpdateValues['id'] = $id;
+        $WarningUpdateValues['reason'] = $reason;
 
         //Close the statement and connection
         mysqli_stmt_close($stmt);
@@ -33,7 +31,7 @@ if (isset($arr)) {
         echo json_encode($WarningUpdateValues);        
     }
 } else {
-    echo json_encode('No data send');
+    echo json_encode('No data sent');
 }
 
 /**

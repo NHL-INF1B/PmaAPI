@@ -42,7 +42,7 @@ if (isset($arr)) {
         echo json_encode($HourUpdateValues);        
     }
 } else {
-    echo json_encode('No data send');
+    echo json_encode('No data sent');
 }
 
 /**

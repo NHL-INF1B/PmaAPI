@@ -10,6 +10,8 @@ $arr = json_decode($json, TRUE);
 
 if (isset($arr)) {
     $reason = htmlentities($arr['reason']);
+    $user_id = 1;
+    $project_id = 1;
 
     //Validate fields
     if ($error = validateFields($reason)) {
@@ -23,10 +25,8 @@ if (isset($arr)) {
         mysqli_stmt_execute($stmt);
 
         //All value's that will be send back to the application
-        $WarningInsertValues[0]['id'] = mysqli_insert_id($conn);
-        $WarningInsertValues[0]['reason'] = $reason;
-        $WarningInsertValues[0]['user_id'] = $user_id;
-        $WarningInsertValues[0]['project_id'] = $project_id;
+        $WarningInsertValues['id'] = mysqli_insert_id($conn);
+        $WarningInsertValues['reason'] = $reason;
 
         //Close the statement and connection
         mysqli_stmt_close($stmt);
@@ -35,6 +35,8 @@ if (isset($arr)) {
         //Send back response (JSON)
         echo json_encode($WarningInsertValues);   
     }
+} else {
+    echo json_encode('No data sent');
 }
 
 /**

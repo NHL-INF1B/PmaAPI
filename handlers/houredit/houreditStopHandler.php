@@ -36,6 +36,6 @@ if (isset($arr)) {
     //Send back response (JSON)
     echo json_encode($HourEditStopValues);   
 } else {
-    echo json_encode('No data send');
+    echo json_encode('No data sent');
 }
   
