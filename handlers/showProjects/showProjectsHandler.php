@@ -6,11 +6,11 @@ $json = file_get_contents("php://input");
 $arr = json_decode($json, TRUE);
 
 if(isset($arr)){
-    // $userId = htmlentities($arr["userId"]);
-    $userId = 2;
+    $userId = htmlentities($arr["userId"]);
+    // $userId = 2;
     $projectValues = array();
 
-    $query = "SELECT pm.project_id, pm.role_id, p.name FROM projectmember as pm INNER JOIN project as p ON pm.project_id = p.id WHERE user_id = ?";
+    $query = "SELECT pm.project_id, p.name FROM projectmember as pm INNER JOIN project as p ON pm.project_id = p.id WHERE user_id = ?";
 
     if(!$stmt = mysqli_prepare($conn, $query)){
         echo "DB error: " . mysqli_error($conn);
