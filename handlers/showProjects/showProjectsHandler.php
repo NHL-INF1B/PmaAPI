@@ -7,7 +7,6 @@ $arr = json_decode($json, TRUE);
 
 if(isset($arr)){
     $userId = htmlentities($arr["userId"]);
-    // $userId = 2;
     $projectValues = array();
 
     $query = "SELECT pm.project_id, p.name FROM projectmember as pm INNER JOIN project as p ON pm.project_id = p.id WHERE user_id = ?";
