@@ -17,29 +17,34 @@ if (isset($arr)) {
     $user_id = 1;
     $project_id = 1;
 
-    $query = "INSERT INTO timesheet (title, description, date, time_start, time_end, user_id, project_id) VALUES (?,?,?,?,?,?,?)";
+    //Validate fields
+    if ($error = validateFields($title, $description, $date, $time_start, $time_end)) {
+        echo json_encode($error);
+    } else {
+        $query = "INSERT INTO timesheet (title, description, date, time_start, time_end, user_id, project_id) VALUES (?,?,?,?,?,?,?)";
 
-    //Sending data to the database
-    $stmt = mysqli_prepare($conn, $query);
-    mysqli_stmt_bind_param($stmt, "sssssii", $title, $description, $date, $time_start, $time_end, $user_id, $project_id);
-    mysqli_stmt_execute($stmt);
+        //Sending data to the database
+        $stmt = mysqli_prepare($conn, $query);
+        mysqli_stmt_bind_param($stmt, "sssssii", $title, $description, $date, $time_start, $time_end, $user_id, $project_id);
+        mysqli_stmt_execute($stmt);
 
-    //All value's that will be send back to the application
-    $HourEditValues[0]['id'] = mysqli_insert_id($conn);
-    $HourEditValues[0]['title'] = $title;
-    $HourEditValues[0]['description'] = $description;
-    $HourEditValues[0]['date'] = $date;
-    $HourEditValues[0]['time_start'] = $time_start;
-    $HourEditValues[0]['time_end'] = $time_end;
-    $HourEditValues[0]['user_id'] = $user_id;
-    $HourEditValues[0]['project_id'] = $project_id;
+        //All value's that will be send back to the application
+        $HourEditValues['id'] = mysqli_insert_id($conn);
+        $HourEditValues['title'] = $title;
+        $HourEditValues['description'] = $description;
+        $HourEditValues['date'] = $date;
+        $HourEditValues['time_start'] = $time_start;
+        $HourEditValues['time_end'] = $time_end;
 
-    //Close the statement and connection
-    mysqli_stmt_close($stmt);
-    mysqli_close($conn);
+        //Close the statement and connection
+        mysqli_stmt_close($stmt);
+        mysqli_close($conn);
 
-    //Send back response (JSON)
-    echo json_encode($HourEditValues);   
+        //Send back response (JSON)
+        echo json_encode($HourEditValues);   
+    }
+} else {
+    echo json_encode('No data send');
 }
 
 /**
@@ -61,12 +66,6 @@ function validateFields ($title, $description, $date, $time_start, $time_end) {
     }
     if (!isset($time_end) || !filter_var($time_end, FILTER_SANITIZE_SPECIAL_CHARS)) {
         $error[] = 'time_end_incorrect';
-    }
-    if (!isset($user_id) || !filter_var($user_id, FILTER_SANITIZE_NUMBER_INT)) {
-        $error[] = 'user_id_incorrect';
-    }
-    if (!isset($project_id) || !filter_var($project_id, FILTER_SANITIZE_NUMBER_INT)) {
-        $error[] = 'project_id_incorrect';
     }
 
     if (empty($error)) {
