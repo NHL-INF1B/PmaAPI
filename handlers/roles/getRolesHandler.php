@@ -19,7 +19,10 @@ if (isset($arr)) {
         $error = array();
 
         //Requesting data from the database
-        $queryuery = "SELECT * FROM `projectmember` WHERE project_id = ?";
+        $queryuery = "SELECT * 
+                        FROM `projectmember` 
+                        WHERE project_id = ?
+                        ORDER BY user_id DESC";
         $stmt = mysqli_prepare($conn, $query);
         mysqli_stmt_bind_param($stmt, "i", $projectId);
         mysqli_stmt_execute($stmt);
