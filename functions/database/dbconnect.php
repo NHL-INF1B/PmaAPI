@@ -6,7 +6,7 @@
  */
 function connectDB() {
     //Require ENV
-    require_once('env.dist.php');
+    require_once('env.php');
 
     // Connect to server (localhost server)
     $conn = mysqli_connect(HOSTNAME, USERNAME, PASSWORD, DATABASE);
