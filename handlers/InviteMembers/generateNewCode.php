@@ -48,5 +48,5 @@ if (isset($array)) {
         echo json_encode("There is no data.");
     }
 }else{
-    echo json_encode("There is no data.");
+    echo json_encode("No data send.");
 }
