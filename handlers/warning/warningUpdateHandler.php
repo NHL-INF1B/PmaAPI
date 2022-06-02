@@ -8,25 +8,47 @@ $arr = json_decode($json, TRUE);
 if (isset($arr)) {
     $reason = htmlentities($arr['reason']);
 
-    $query = "UPDATE warning SET reason = ? WHERE id = 1";
+    //Validate fields
+    if ($error = validateFields($reason)) {
+        echo json_encode($error);
+    } else {
+        $query = "UPDATE warning SET reason = ?, user_id = ? WHERE id = ?";
 
-    //Sending data to the database
-    $stmt = mysqli_prepare($conn, $query);
-    mysqli_stmt_bind_param($stmt, "s", $reason);
-    mysqli_stmt_execute($stmt);
+        //Sending data to the database
+        $stmt = mysqli_prepare($conn, $query);
+        mysqli_stmt_bind_param($stmt, "sii", $reason, $user_id, $id);
+        mysqli_stmt_execute($stmt);
 
-    //All value's that will be send back to the application
-    $WarningUpdateValues[0]['id'] = mysqli_insert_id($conn);
-    $WarningUpdateValues[0]['reason'] = $reason;
-    $WarningUpdateValues[0]['user_id'] = $user_id;
-    $WarningUpdateValues[0]['project_id'] = $project_id;
+        //All value's that will be send back to the application
+        $WarningUpdateValues['id'] = $id;
+        $WarningUpdateValues['reason'] = $reason;
 
-    //Close the statement and connection
-    mysqli_stmt_close($stmt);
-    mysqli_close($conn);
+        //Close the statement and connection
+        mysqli_stmt_close($stmt);
+        mysqli_close($conn);
 
-    //Send back response (JSON)
-    echo json_encode($WarningUpdateValues);   
+        //Send back response (JSON)
+        echo json_encode($WarningUpdateValues);        
+    }
+} else {
+    echo json_encode('No data sent');
+}
+
+/**
+ * Function to validate fields
+ */
+function validateFields ($reason) {
+    $error = array();
+
+    if (!isset($reason) || !filter_var($reason, FILTER_SANITIZE_SPECIAL_CHARS)) {
+        $error[] = 'reason_incorrect';
+    }
+
+    if (empty($error)) {
+        return false;
+    } else {
+        return $error;
+    }
 }
 
   

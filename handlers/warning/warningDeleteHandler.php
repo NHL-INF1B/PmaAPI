@@ -2,31 +2,25 @@
 require_once('../../functions/database/dbconnect.php');
 require_once('../../functions/anti-cors/anticors.php');
 
-$json = file_get_contents('php://input');
-$arr = json_decode($json, TRUE); 
+$query = "DELETE FROM warning WHERE id = ?";
 
-if (isset($arr)) {
-    $reason = htmlentities($arr['reason']);
+//Sending data to the database
+$stmt = mysqli_prepare($conn, $query);
+mysqli_stmt_bind_param($stmt, "i", $id);
+mysqli_stmt_execute($stmt);
 
-    $query = "DELETE FROM warning WHERE id = ?";
+//All value's that will be send back to the application
+$WarningDeleteValues['id'] = $id;
+$WarningDeleteValues['reason'] = $reason;
+$WarningDeleteValues['user_id'] = $user_id;
+$WarningDeleteValues['project_id'] = $project_id;
 
-    //Sending data to the database
-    $stmt = mysqli_prepare($conn, $query);
-    mysqli_stmt_bind_param($stmt, "i", $id);
-    mysqli_stmt_execute($stmt);
+//Close the statement and connection
+mysqli_stmt_close($stmt);
+mysqli_close($conn);
 
-    //All value's that will be send back to the application
-    $WarningDeleteValues[0]['id'] = $id;
-    $WarningDeleteValues[0]['reason'] = $reason;
-    $WarningDeleteValues[0]['user_id'] = $user_id;
-    $WarningDeleteValues[0]['project_id'] = $project_id;
+//Send back response (JSON)
+echo json_encode($WarningDeleteValues);   
 
-    //Close the statement and connection
-    mysqli_stmt_close($stmt);
-    mysqli_close($conn);
-
-    //Send back response (JSON)
-    echo json_encode($WarningDeleteValues);   
-}
 
   
