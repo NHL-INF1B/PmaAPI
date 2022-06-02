@@ -1,5 +1,5 @@
 <?php
-define('HOSTNAME', 'localhost');
-define('USERNAME', 'root');
+define('HOSTNAME', '');
+define('USERNAME', '');
 define('PASSWORD', '');
-define('DATABASE', 'projectmanagementapp');
+define('DATABASE', '');
