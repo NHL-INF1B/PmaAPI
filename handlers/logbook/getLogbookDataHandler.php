@@ -10,7 +10,7 @@ if(isset($arr)){
     $userId = htmlentities($arr["userId"]);
     $projectId = htmlentities($arr["projectId"]);
 
-    $query = "SELECT * FROM `timesheet` WHERE user_id = ? AND project_id = ?";
+    $query = "SELECT * FROM `timesheet` WHERE user_id = ? AND project_id = ? ORDER BY time_start";
 
     if(!$stmt = mysqli_prepare($conn, $query)){
         echo "DB error: " . mysqli_error($conn);
