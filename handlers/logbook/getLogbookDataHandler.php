@@ -7,8 +7,8 @@ $arr = json_decode($json, TRUE);
 
 if(isset($arr)){
 
-    $userId = 2;
-    $projectId = 2;
+    $userId = htmlentities($arr["userId"]);
+    $projectId = htmlentities($arr["projectId"]);
 
     $query = "SELECT * FROM `timesheet` WHERE user_id = ? AND project_id = ?";
 
