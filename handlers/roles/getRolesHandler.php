@@ -7,10 +7,11 @@ require_once('../../functions/anti-cors/anticors.php');
  */
 
 $json = file_get_contents('php://input');
+var_dump($json);
 $arr = json_decode($json, TRUE); // returns array("username" => "stefan") etc.
 
 if (isset($arr)) {
-    $value = htmlentities($arr['value']);
+    $projectId = htmlentities($arr['project_id']);
 
     if ($error = validateFields($value)) {
         echo json_encode($error);
@@ -19,21 +20,25 @@ if (isset($arr)) {
         $error = array();
 
         //Requesting data from the database
-        $queryuery = "SELECT * 
-                        FROM `projectmember` 
-                        WHERE project_id = ?
-                        ORDER BY user_id DESC";
+        $query = "SELECT `projectmember`.user_id, `projectmember`.role_id, `user`.name
+                    FROM `projectmember` 
+                    JOIN `user`
+                    ON `user`.id = `projectmember`.user_id
+                    WHERE project_id = ?
+                    ORDER BY user_id DESC";
         $stmt = mysqli_prepare($conn, $query);
         mysqli_stmt_bind_param($stmt, "i", $projectId);
         mysqli_stmt_execute($stmt);
-        mysqli_stmt_bind_result($stmt, $userId, $projectId, $roleId);
-        while (mysqli_stmt_fetch($stmt)) {}
+        mysqli_stmt_bind_result($stmt, $userId, $roleId, $userName);
+        
 
         if (mysqli_stmt_num_rows($stmt) > 0) {
-        //All value's that will be send back to the application
-        $userValues[0]['user_id'] = $userId;
-        $userValues[0]['project_id'] = $projectId;
-        $userValues[0]['role_id'] = $roleId;
+            while (mysqli_stmt_fetch($stmt)) {
+                //All value's that will be send back to the application
+                $userValues['user_id'] = $userId;
+                $userValues['role_id'] = $roleId;
+                $userValues['name'] = $userName;
+            }
         
         mysqli_stmt_close($stmt);
         mysqli_close($conn);
