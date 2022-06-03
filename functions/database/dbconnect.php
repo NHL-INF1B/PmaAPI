@@ -1,10 +1,12 @@
 <?php
+
 /**
  * Function connectDB
  * Function to connect to Database
  * @return object $conn Database connection
  */
-function connectDB() {
+function connectDB()
+{
     //Require ENV
     require_once('env.php');
 
