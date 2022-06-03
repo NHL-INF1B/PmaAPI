@@ -15,9 +15,9 @@ if (isset($array)) {
     //updating the qrcode info
     $sql = "UPDATE project
             SET qrcode=?
-            WHERE id=? AND NOT EXISTS(SELECT * from project WHERE qrcode=?)";
+            WHERE id=?";
     $stmt = mysqli_prepare($conn, $sql);
-    mysqli_stmt_bind_param($stmt, 'sis', $qrcode, $projectId, $qrcode);
+    mysqli_stmt_bind_param($stmt, 'si', $qrcode, $projectId);
     mysqli_stmt_execute($stmt);
     mysqli_stmt_close($stmt);
 
