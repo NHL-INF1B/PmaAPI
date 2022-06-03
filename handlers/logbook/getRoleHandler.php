@@ -16,15 +16,15 @@ if(isset($arr)){
         echo "DB error: " . mysqli_error($conn);
         die();
     }
-
+    
     if(!mysqli_stmt_bind_param($stmt, "ii", $userId, $projectId) || !mysqli_stmt_execute($stmt)){
         echo "DB error: " . mysqli_error($conn);
         die();
     }
-
+    
     $res = mysqli_stmt_get_result($stmt);
-    $result = mysqli_fetch_all($res, MYSQLI_ASSOC);
-
+    $result = mysqli_fetch_array($res, MYSQLI_ASSOC);
+    
     echo json_encode($result);
 
 } else{
