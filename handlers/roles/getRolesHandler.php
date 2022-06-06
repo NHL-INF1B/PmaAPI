@@ -6,17 +6,33 @@ require_once('../../functions/anti-cors/anticors.php');
  * Getting posted data from the app
  */
 
+if(!isset($_GET["projectId"])) {
+    echo 'de get wordt niet meegegeven ';
+} else {
+    $projectId = $_GET['projectId'];
+    echo $projectId;
+}
+
 $json = file_get_contents('php://input');
+
+if($json === false){
+    echo" teruggegeven waarde is: false ";
+}elseif($json == false){
+    echo" teruggegeven waarde is een nonboolean die wordt uitgelezen als: false ";
+}else{
+    echo" waarom de f doet hij het niet? ";
+}
+// php://input geeft empty string als waarde in plaats van wat ik mee zou willen geven
 var_dump($json);
 $arr = json_decode($json, TRUE); // returns array("username" => "stefan") etc.
+print_r($arr);
 
 if (isset($arr)) {
     $projectId = htmlentities($arr['project_id']);
 
-    if ($error = validateFields($value)) {
+    if ($error = validateFields($projectId)) {
         echo json_encode($error);
     } else {
-        $userValues = array();
         $error = array();
 
         //Requesting data from the database
@@ -30,34 +46,23 @@ if (isset($arr)) {
         mysqli_stmt_bind_param($stmt, "i", $projectId);
         mysqli_stmt_execute($stmt);
         mysqli_stmt_bind_result($stmt, $userId, $roleId, $userName);
-        
 
-        if (mysqli_stmt_num_rows($stmt) > 0) {
-            while (mysqli_stmt_fetch($stmt)) {
-                //All value's that will be send back to the application
-                $userValues['user_id'] = $userId;
-                $userValues['role_id'] = $roleId;
-                $userValues['name'] = $userName;
-            }
-        
+        $res = mysqli_stmt_get_result($stmt);
+        $result = mysqli_fetch_all($res, MYSQLI_ASSOC);
+
         mysqli_stmt_close($stmt);
         mysqli_close($conn);
 
-        //Send back response (JSON)
-        echo json_encode($userValues);
-        } else {
-            $error[] = 'No_projectmembers';
-            echo json_encode($error);
-        }
+        echo json_encode($result);
     }
 } else {
     echo json_encode('No data send');
 }
 
-function validateFields($value) {
+function validateFields($projectId) {
     $error = array();
 
-    if (!isset($value)) {
+    if (!isset($projectId)) {
         $error[] = 'No_value_set';
     }
 
