@@ -9,6 +9,7 @@ $json = file_get_contents('php://input');
 $arr = json_decode($json, TRUE); 
 
 if (isset($arr)) {
+    //Bind data from the input fields to variables
     $id = htmlentities($arr['id']);
     $title = htmlentities($arr['title']);
     $description = htmlentities($arr['description']);
@@ -24,6 +25,7 @@ if (isset($arr)) {
     } else {
         $query = "UPDATE timesheet SET title = ?, description = ?, date = ?, time_start = ?, time_end = ? WHERE id = ?";
 
+        //Sending data to the database
         $stmt = mysqli_prepare($conn, $query) or die(mysqli_error($conn));
         mysqli_stmt_bind_param($stmt, "sssssi", $title, $description, $date, $time_start, $time_end, $id) or die(mysqli_error($conn));
         mysqli_stmt_execute($stmt) or die(mysqli_error($conn));

@@ -12,6 +12,8 @@ if (isset($arr)) {
     $id = htmlentities($arr['id']);
 
     $sql = "SELECT * FROM timesheet WHERE id = ?";
+
+    //Sending data to the database
     $stmt = mysqli_prepare($conn, $sql);
     mysqli_stmt_bind_param($stmt, "i", $id);
     mysqli_stmt_execute($stmt);
@@ -36,7 +38,7 @@ if (isset($arr)) {
     //Close the statement and the connection
      mysqli_stmt_close($stmt);
      mysqli_close($conn);
-     
+
     //Send back response (JSON)
     echo json_encode($result);
 } else {
