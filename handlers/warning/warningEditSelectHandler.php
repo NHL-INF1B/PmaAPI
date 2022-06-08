@@ -11,13 +11,13 @@ $arr = json_decode($json, TRUE);
 if (isset($arr)) {
     $id = htmlentities($arr['id']);
 
-    $sql = "SELECT * FROM timesheet WHERE id = ?";
+    $sql = "SELECT * FROM warning WHERE id = ?";
 
     //Sending data to the database
     $stmt = mysqli_prepare($conn, $sql);
     mysqli_stmt_bind_param($stmt, "i", $id);
     mysqli_stmt_execute($stmt);
-    mysqli_stmt_bind_result($stmt, $id, $title, $description, $date, $time_start, $time_end, $user_id, $project_id);
+    mysqli_stmt_bind_result($stmt, $id, $reason, $user_id, $project_id);
     mysqli_stmt_store_result($stmt);
 
     $result = array();
@@ -26,11 +26,7 @@ if (isset($arr)) {
 
     if (mysqli_stmt_num_rows($stmt) > 0) {
         $result['id'] = $id;
-        $result['title'] = $title;
-        $result['description'] = $description;
-        $result['date'] = $date;
-        $result['time_start'] = $time_start;
-        $result['time_end'] = $time_end;
+        $result['reason'] = $reason;
     } else {
         echo json_encode("No results");
     }

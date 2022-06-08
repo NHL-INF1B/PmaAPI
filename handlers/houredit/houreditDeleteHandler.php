@@ -14,9 +14,9 @@ if (isset($arr)) {
     $sql = "DELETE FROM timesheet WHERE id = ?";
 
     //Sending data to the database
-    $stmt = mysqli_prepare($conn, $sql) or die ("prepare");
-    mysqli_stmt_bind_param($stmt, "i", $id)or die ("bind");
-    mysqli_stmt_execute($stmt)or die ("exec");
+    $stmt = mysqli_prepare($conn, $sql);
+    mysqli_stmt_bind_param($stmt, "i", $id);
+    mysqli_stmt_execute($stmt);
 
     //Close the statement and connection
     mysqli_stmt_close($stmt);
