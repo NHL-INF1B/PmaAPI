@@ -123,7 +123,7 @@ CREATE TABLE `timesheet` (
 CREATE TABLE `user` (
   `id` int(8) NOT NULL,
   `name` varchar(50) NOT NULL,
-  `email` varchar(50) NOT NULL,
+  `email` varchar(100) NOT NULL,
   `password` varchar(255) NOT NULL,
   `dateOfBirth` date NOT NULL,
   `phoneNumber` varchar(50) NOT NULL,
