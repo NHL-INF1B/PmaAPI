@@ -9,11 +9,15 @@ $json = file_get_contents('php://input');
 $arr = json_decode($json, TRUE); 
 
 if (isset($arr)) {
+    //Bind data from the input fields to variables
+    $id = htmlentities($arr['id']);
     $title = htmlentities($arr['title']);
     $description = htmlentities($arr['description']);
     $date = htmlentities($arr['date']);
     $time_start = htmlentities($arr['time_start']);
     $time_end = htmlentities($arr['time_end']);
+    $user_id = htmlentities($arr['user_id']);
+    $project_id = htmlentities($arr['project_id']);
 
     //Validate fields
     if ($error = validateFields($title, $description, $date, $time_start, $time_end)) {
@@ -22,11 +26,11 @@ if (isset($arr)) {
         $query = "UPDATE timesheet SET title = ?, description = ?, date = ?, time_start = ?, time_end = ? WHERE id = ?";
 
         //Sending data to the database
-        $stmt = mysqli_prepare($conn, $query);
-        mysqli_stmt_bind_param($stmt, "sssssi", $title, $description, $date, $time_start, $time_end, $id);
-        mysqli_stmt_execute($stmt);
+        $stmt = mysqli_prepare($conn, $query) or die(mysqli_error($conn));
+        mysqli_stmt_bind_param($stmt, "sssssi", $title, $description, $date, $time_start, $time_end, $id) or die(mysqli_error($conn));
+        mysqli_stmt_execute($stmt) or die(mysqli_error($conn));
 
-        //All value's that will be send back to the application
+        //All values that will be send back to the application
         $HourUpdateValues['id'] = $id;
         $HourUpdateValues['title'] = $title;
         $HourUpdateValues['description'] = $description;
@@ -34,12 +38,12 @@ if (isset($arr)) {
         $HourUpdateValues['time_start'] = $time_start;
         $HourUpdateValues['time_end'] = $time_end;
 
+        //Send back response (JSON)
+        echo json_encode($HourUpdateValues);   
+        
         //Close the statement and connection
         mysqli_stmt_close($stmt);
         mysqli_close($conn);
-
-        //Send back response (JSON)
-        echo json_encode($HourUpdateValues);        
     }
 } else {
     echo json_encode('No data sent');
@@ -57,7 +61,6 @@ function validateFields ($title, $description, $date, $time_start, $time_end) {
     if (!isset($description) || !filter_var($description, FILTER_SANITIZE_SPECIAL_CHARS)) {
         $error[] = 'description_incorrect';
     }
-    // $date = preg_replace("([^0-9/])", "", $_POST['date']);
     if (!isset($date) || !filter_var($date, FILTER_SANITIZE_SPECIAL_CHARS)) {
         $error[] = 'date_incorrect';
     }

@@ -2,25 +2,28 @@
 require_once('../../functions/database/dbconnect.php');
 require_once('../../functions/anti-cors/anticors.php');
 
-$query = "DELETE FROM warning WHERE id = ?";
+/** 
+ * Getting posted data from the app
+ */
+$json = file_get_contents('php://input');
+$arr = json_decode($json, TRUE); 
 
-//Sending data to the database
-$stmt = mysqli_prepare($conn, $query);
-mysqli_stmt_bind_param($stmt, "i", $id);
-mysqli_stmt_execute($stmt);
+if (isset($arr)) {
+    $id = htmlentities($arr['id']);
 
-//All value's that will be send back to the application
-$WarningDeleteValues['id'] = $id;
-$WarningDeleteValues['reason'] = $reason;
-$WarningDeleteValues['user_id'] = $user_id;
-$WarningDeleteValues['project_id'] = $project_id;
+    $sql = "DELETE FROM warning WHERE id = ?";
 
-//Close the statement and connection
-mysqli_stmt_close($stmt);
-mysqli_close($conn);
+    //Sending data to the database
+    $stmt = mysqli_prepare($conn, $sql);
+    mysqli_stmt_bind_param($stmt, "i", $id);
+    mysqli_stmt_execute($stmt);
 
-//Send back response (JSON)
-echo json_encode($WarningDeleteValues);   
+    //Close the statement and connection
+    mysqli_stmt_close($stmt);
+    mysqli_close($conn);
+} else {
+    echo json_encode('No data sent');
+}
 
 
   

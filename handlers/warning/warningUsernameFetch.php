@@ -17,7 +17,7 @@ if (isset($arr)) {
     } else {
         $error = array();
 
-        //Recieving data from the database
+        //Receiving data from the database
         $query = "SELECT `name` FROM user WHERE id = ?";
         $stmt = mysqli_prepare($conn, $query);
         mysqli_stmt_bind_param($stmt, "i", $userid);
