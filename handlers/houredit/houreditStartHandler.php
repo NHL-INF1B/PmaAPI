@@ -14,7 +14,7 @@ if (isset($arr)) {
     $description = htmlentities($arr['description']);
     $date = date("Y-m-d");
     $time_start = date("H:i");
-    $time_end = null;     
+    $time_end = "00:00:00";     
     $user_id = htmlentities($arr['user_id']);
     $project_id = htmlentities($arr['project_id']);
 

@@ -26,9 +26,9 @@ if (isset($arr)) {
         $query = "UPDATE timesheet SET title = ?, description = ?, date = ?, time_start = ?, time_end = ? WHERE id = ?";
 
         //Sending data to the database
-        $stmt = mysqli_prepare($conn, $query) or die(mysqli_error($conn));
-        mysqli_stmt_bind_param($stmt, "sssssi", $title, $description, $date, $time_start, $time_end, $id) or die(mysqli_error($conn));
-        mysqli_stmt_execute($stmt) or die(mysqli_error($conn));
+        $stmt = mysqli_prepare($conn, $query);
+        mysqli_stmt_bind_param($stmt, "sssssi", $title, $description, $date, $time_start, $time_end, $id);
+        mysqli_stmt_execute($stmt);
 
         //All values that will be send back to the application
         $HourUpdateValues['id'] = $id;
