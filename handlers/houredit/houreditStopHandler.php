@@ -31,6 +31,8 @@ if (isset($arr)) {
     $HourEditStopValues['time_start'] = $time_start;
     $HourEditStopValues['time_end'] = $time_end;
 
+    echo json_encode('data_updated');
+
     //Close the statement and connection
     mysqli_stmt_close($stmt);
     mysqli_close($conn);

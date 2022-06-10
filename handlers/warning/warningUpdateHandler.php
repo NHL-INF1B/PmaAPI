@@ -23,6 +23,8 @@ if (isset($arr)) {
         mysqli_stmt_bind_param($stmt, "sii", $reason, $user_id, $id);
         mysqli_stmt_execute($stmt);
 
+        echo json_encode('data_updated');
+
         //All value's that will be send back to the application
         $WarningUpdateValues['id'] = $id;
         $WarningUpdateValues['reason'] = $reason;

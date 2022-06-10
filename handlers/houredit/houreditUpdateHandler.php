@@ -38,6 +38,8 @@ if (isset($arr)) {
         $HourUpdateValues['time_start'] = $time_start;
         $HourUpdateValues['time_end'] = $time_end;
 
+        echo json_encode('data_updated');
+
         //Send back response (JSON)
         echo json_encode($HourUpdateValues);   
         

@@ -7,7 +7,7 @@ require_once('../../functions/anti-cors/anticors.php');
  */
 $json = file_get_contents('php://input');
 $arr = json_decode($json, TRUE);
-
+ 
 if (isset($arr)) {
     $id = htmlentities($arr['id']);
 
