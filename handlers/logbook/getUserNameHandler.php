@@ -19,6 +19,9 @@ if(isset($arr)){
         echo "DB error: " . mysqli_error($conn);
     }
     
+    mysqli_stmt_close($stmt);
+    mysqli_close($conn);
+
     $res = mysqli_stmt_get_result($stmt);
     $result = mysqli_fetch_array($res, MYSQLI_ASSOC);
     
