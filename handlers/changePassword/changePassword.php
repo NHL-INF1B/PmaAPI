@@ -33,6 +33,7 @@ if (isset($array)) {
             mysqli_stmt_bind_param($stmt, 'si', $password, $userId);
             mysqli_stmt_execute($stmt);
             mysqli_stmt_close($stmt);
+            mysqli_close($conn);
 
             //send a maessage that the password has changed.
             $result[] = "password_changed";
