@@ -14,7 +14,7 @@ if (isset($arr)) {
     $description = htmlentities($arr['description']);
     $date = date("Y-m-d");
     $time_start = date("H:i");
-    $time_end = htmlentities($arr['time_end']);
+    $time_end = null;     
     $user_id = htmlentities($arr['user_id']);
     $project_id = htmlentities($arr['project_id']);
 
@@ -54,10 +54,10 @@ if (isset($arr)) {
 function validateFields ($title, $description) {
     $error = array();
     if (!isset($title) || !filter_var($title, FILTER_SANITIZE_SPECIAL_CHARS)) {
-        $error[] = 'title_incorrect';
+        $error[] = 'title_timer_incorrect';
     }
     if (!isset($description) || !filter_var($description, FILTER_SANITIZE_SPECIAL_CHARS)) {
-        $error[] = 'description_incorrect';
+        $error[] = 'description_timer_incorrect';
     }
 
     if (empty($error)) {
