@@ -14,14 +14,16 @@ if (isset($array)) {
     $sql = "SELECT user.id, user.name, projectmember.reward_points FROM user INNER JOIN projectmember ON user.id = projectmember.user_id WHERE project_id = ?";
     $stmt = mysqli_prepare($conn, $sql);
     mysqli_stmt_bind_param($stmt, 'i', $projectId);
+    mysqli_execute($stmt);
+    $result = mysqli_stmt_get_result($stmt);
 
-    $result = mysqli_query($conn, $stmt);
     $data = mysqli_fetch_all($result, MYSQLI_ASSOC);
+
 
     $projectMembers = [];
 
     foreach ($data as $row){
-        $projectMembers[$row["test"]][] = $row;
+        $projectMembers[] = $row;
     }
 
     //Send back response (JSON)
