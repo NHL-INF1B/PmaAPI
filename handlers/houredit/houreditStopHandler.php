@@ -8,13 +8,9 @@ $arr = json_decode($json, TRUE);
 if (isset($arr)) {
     //Bind data from the input fields to variables and set time_end
     $id = htmlentities($arr['id']);
-    $title = htmlentities($arr['title']);
-    $description = htmlentities($arr['description']);
-    $date = htmlentities($arr['date']);
-    $time_start = htmlentities($arr['time_start']);
     $time_end = date("H:i");
-    $user_id = htmlentities($arr['user_id']);
-    $project_id = htmlentities($arr['project_id']);
+    $userId = htmlentities($arr['userId']);
+    $projectId = htmlentities($arr['projectId']);
 
     $query = "UPDATE timesheet SET time_end = ? WHERE id = ?";
 
@@ -25,10 +21,6 @@ if (isset($arr)) {
 
     //All value's that will be send back to the application
     $HourEditStopValues['id'] = $id;
-    $HourEditStopValues['title'] = $title;
-    $HourEditStopValues['description'] = $description;
-    $HourEditStopValues['date'] = $date;
-    $HourEditStopValues['time_start'] = $time_start;
     $HourEditStopValues['time_end'] = $time_end;
 
     //Close the statement and connection

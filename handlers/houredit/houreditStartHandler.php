@@ -14,9 +14,9 @@ if (isset($arr)) {
     $description = htmlentities($arr['description']);
     $date = date("Y-m-d");
     $time_start = date("H:i");
-    $time_end = "00:00:00";     
-    $user_id = htmlentities($arr['user_id']);
-    $project_id = htmlentities($arr['project_id']);
+    $time_end = "00:00";     
+    $userId = htmlentities($arr['userId']);
+    $projectId = htmlentities($arr['projectId']);
 
     //Validate fields
     if ($error = validateFields($title, $description)) {
@@ -26,7 +26,7 @@ if (isset($arr)) {
 
         //Sending data to the database
         $stmt = mysqli_prepare($conn, $query);
-        mysqli_stmt_bind_param($stmt, "sssssii", $title, $description, $date, $time_start, $time_end, $user_id, $project_id);
+        mysqli_stmt_bind_param($stmt, "sssssii", $title, $description, $date, $time_start, $time_end, $userId, $projectId);
         mysqli_stmt_execute($stmt);
 
         //All value's that will be send back to the application
