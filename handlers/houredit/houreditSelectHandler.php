@@ -17,7 +17,7 @@ if (isset($arr)) {
     $stmt = mysqli_prepare($conn, $sql);
     mysqli_stmt_bind_param($stmt, "i", $id);
     mysqli_stmt_execute($stmt);
-    mysqli_stmt_bind_result($stmt, $id, $title, $description, $date, $time_start, $time_end, $user_id, $project_id);
+    mysqli_stmt_bind_result($stmt, $id, $title, $description, $date, $time_start, $time_end, $userId, $projectId);
     mysqli_stmt_store_result($stmt);
 
     $result = array();

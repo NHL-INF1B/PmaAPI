@@ -16,8 +16,8 @@ if (isset($arr)) {
     $date = htmlentities($arr['date']);
     $time_start = htmlentities($arr['time_start']);
     $time_end = htmlentities($arr['time_end']);
-    $user_id = htmlentities($arr['user_id']);
-    $project_id = htmlentities($arr['project_id']);
+    $userId = htmlentities($arr['userId']);
+    $projectId = htmlentities($arr['projectId']);
 
     //Validate fields
     if ($error = validateFields($title, $description, $date, $time_start, $time_end)) {

@@ -69,7 +69,7 @@ function validateFields ($title, $description, $date, $time_start, $time_end) {
     if (!isset($time_end) || !filter_var($time_end, FILTER_SANITIZE_SPECIAL_CHARS)) {
         $error[] = 'time_end_incorrect';
     }
-    if ($time_start >= $time_end) {
+    if ($time_start > $time_end) {
         $error[] = 'times_invalid';
     }
     if ($time_start == $time_end) {
