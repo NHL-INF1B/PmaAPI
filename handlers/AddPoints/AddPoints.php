@@ -11,13 +11,14 @@ $error = array();
 if (isset($array)) {
     //put the info into variables
     $userId = htmlentities($array['userId']);
+    $projectId = htmlentities($array['projectId']);
     
     $result = array();
 
     //getting the points the user has before new points
-    $sql = "SELECT reward_points FROM projectmember WHERE user_id=?;";
+    $sql = "SELECT reward_points FROM projectmember WHERE user_id=? AND project_id=?;";
     $stmt = mysqli_prepare($conn, $sql);
-    mysqli_stmt_bind_param($stmt, "i", $userId);
+    mysqli_stmt_bind_param($stmt, "ii", $userId, $projectId);
     mysqli_stmt_execute($stmt);
     mysqli_stmt_bind_result($stmt, $pointsBefore);
     mysqli_stmt_store_result($stmt);
