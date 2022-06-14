@@ -22,12 +22,13 @@ if(isset($arr)){
         die();
     }
     
-    mysqli_stmt_close($stmt);
-    mysqli_close($conn);
-
+    
     $res = mysqli_stmt_get_result($stmt);
     $result = mysqli_fetch_all($res, MYSQLI_ASSOC);
-
+    
+    mysqli_stmt_close($stmt);
+    mysqli_close($conn);
+    
     echo json_encode($result);
 
 } else{
