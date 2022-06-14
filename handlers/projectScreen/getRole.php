@@ -12,12 +12,13 @@ $error = array();
 if (isset($array)) {
     //put the info into variables
     $userId = $array['userId'];
+    $projectId = $array['projectId'];
 
     $result = array();
 
-    $query = "SELECT role_id FROM projectmember WHERE user_id = ?";
+    $query = "SELECT role_id FROM projectmember WHERE user_id = ? AND project_id = ?";
     $stmt = mysqli_prepare($conn, $query);
-    mysqli_stmt_bind_param($stmt, 'i', $userId);
+    mysqli_stmt_bind_param($stmt, 'ii', $userId, $projectId);
     mysqli_stmt_execute($stmt);
     mysqli_stmt_bind_result($stmt, $roleId);
     mysqli_stmt_store_result($stmt);

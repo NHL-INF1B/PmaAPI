@@ -18,6 +18,9 @@ if(isset($arr)){
     if(!mysqli_stmt_bind_param($stmt, "i", $projectId) || !mysqli_stmt_execute($stmt)){
         echo "DB error: " . mysqli_error($conn);
     }
+    
+    mysqli_stmt_close($stmt);
+    mysqli_close($conn);
 
     $res = mysqli_stmt_get_result($stmt);
     $result = mysqli_fetch_all($res, MYSQLI_ASSOC);

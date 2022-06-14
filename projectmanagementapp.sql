@@ -108,8 +108,8 @@ CREATE TABLE `timesheet` (
   `title` varchar(50) NOT NULL,
   `description` varchar(50) NOT NULL,
   `date` date NOT NULL,
-  `time_start` timestamp NULL DEFAULT NULL,
-  `time_end` timestamp NULL DEFAULT NULL,
+  `time_start` time NULL DEFAULT NULL,
+  `time_end` time NULL DEFAULT NULL,
   `user_id` int(8) NOT NULL,
   `project_id` int(8) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;

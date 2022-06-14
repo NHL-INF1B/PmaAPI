@@ -9,23 +9,25 @@ $json = file_get_contents('php://input');
 $arr = json_decode($json, TRUE); 
 
 if (isset($arr)) {
+    //Bind data from the input fields to variables
     $title = htmlentities($arr['title']);
     $description = htmlentities($arr['description']);
     $date = htmlentities($arr['date']);
     $time_start = htmlentities($arr['time_start']);
     $time_end = htmlentities($arr['time_end']);
-    $user_id = 1;
-    $project_id = 1;
+    $userId = htmlentities($arr['userId']);
+    $projectId = htmlentities($arr['projectId']);
 
     //Validate fields
     if ($error = validateFields($title, $description, $date, $time_start, $time_end)) {
         echo json_encode($error);
     } else {
+        $HourEditValues = array();
         $query = "INSERT INTO timesheet (title, description, date, time_start, time_end, user_id, project_id) VALUES (?,?,?,?,?,?,?)";
 
         //Sending data to the database
         $stmt = mysqli_prepare($conn, $query);
-        mysqli_stmt_bind_param($stmt, "sssssii", $title, $description, $date, $time_start, $time_end, $user_id, $project_id);
+        mysqli_stmt_bind_param($stmt, "sssssii", $title, $description, $date, $time_start, $time_end, $userId, $projectId);
         mysqli_stmt_execute($stmt);
 
         //All value's that will be send back to the application
@@ -66,6 +68,12 @@ function validateFields ($title, $description, $date, $time_start, $time_end) {
     }
     if (!isset($time_end) || !filter_var($time_end, FILTER_SANITIZE_SPECIAL_CHARS)) {
         $error[] = 'time_end_incorrect';
+    }
+    if ($time_start >= $time_end) {
+        $error[] = 'times_invalid';
+    }
+    if ($time_start == $time_end) {
+        $error[] = 'times_equal';
     }
 
     if (empty($error)) {

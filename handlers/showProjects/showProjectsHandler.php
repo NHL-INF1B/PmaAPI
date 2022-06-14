@@ -19,10 +19,14 @@ if(isset($arr)){
     if(!mysqli_stmt_bind_param($stmt, "i", $userId) || !mysqli_stmt_execute($stmt)){
         echo "DB error: " . mysqli_error($conn);
     }
-
+    
+    
     $res = mysqli_stmt_get_result($stmt);
     $result = mysqli_fetch_all($res, MYSQLI_ASSOC);
-
+    
+    mysqli_stmt_close($stmt);
+    mysqli_close($conn);
+    
     echo json_encode($result);
 } else{
     echo json_encode("No data send");

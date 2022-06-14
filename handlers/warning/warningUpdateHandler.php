@@ -6,7 +6,11 @@ $json = file_get_contents('php://input');
 $arr = json_decode($json, TRUE); 
 
 if (isset($arr)) {
+    //Bind data from the input fields to variables
+    $id = htmlentities($arr['id']);
     $reason = htmlentities($arr['reason']);
+    $user_id = htmlentities($arr['user_id']);
+    $project_id = htmlentities($arr['project_id']);
 
     //Validate fields
     if ($error = validateFields($reason)) {
