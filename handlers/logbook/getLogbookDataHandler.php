@@ -16,7 +16,7 @@ if(isset($arr)){
         echo "DB error: " . mysqli_error($conn);
         die();
     }
-
+    
     if(!mysqli_stmt_bind_param($stmt, "ii", $userId, $projectId) || !mysqli_stmt_execute($stmt)){
         echo "DB error: " . mysqli_error($conn);
         die();
@@ -29,7 +29,11 @@ if(isset($arr)){
     mysqli_stmt_close($stmt);
     mysqli_close($conn);
     
-    echo json_encode($result);
+    if(!empty($result)){
+        echo json_encode($result);
+    } else{
+        echo json_encode("NO_DATA");
+    }
 
 } else{
     echo json_encode("No data send");
