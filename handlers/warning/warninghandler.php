@@ -13,7 +13,7 @@ if (isset($arr)) {
     $stmt = mysqli_prepare($conn, $sql);
     mysqli_stmt_execute($stmt);
     mysqli_stmt_store_result($stmt);
-    mysqli_stmt_bind_result($stmt, $id, $reason, $user_id, $project_id);
+    mysqli_stmt_bind_result($stmt, $id, $reason, $userId, $projectId);
 
     $query = mysqli_query($conn, $sql);
     $result = array();
