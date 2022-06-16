@@ -33,7 +33,7 @@ if (isset($arr)) {
         mysqli_close($conn);
 
         //Send back response (JSON)
-        echo json_encode($result);]
+        echo json_encode($result);
     }
 } else {
     echo json_encode('No data send');
