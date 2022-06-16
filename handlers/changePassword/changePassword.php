@@ -2,32 +2,31 @@
 require_once('../../functions/database/dbconnect.php');
 require_once('../../functions/anti-cors/anticors.php');
 
-//get the data from the react native
+//Get the data from the react native
 $json = file_get_contents('php://input');
 $array = json_decode($json, TRUE);
 $error = array();
 
-//check if there is data send
+//Check if there is data send
 if (isset($array)) {
-    //put the info into variables
+    //Put the info into variables
     $userId = htmlentities($array['id']);
     $oldPassword = htmlentities($array['oldPassword']);
     $newPassword = htmlentities($array['newPassword']);
     $confirmPassword = htmlentities($array['confirmPassword']);
 
-    //the array for the results
     $result = array();
 
-    //if the old password is correct
-    if(correctOldPassword($conn, $userId, $oldPassword) == true){
+    //Check if the old password is correct
+    if (correctOldPassword($conn, $userId, $oldPassword) == true) {
         //if there is an error send that error back.
-        if($error = validateFields($newPassword, $confirmPassword)){
+        if ($error = validateFields($newPassword, $confirmPassword)) {
             echo json_encode($error);
-        }else{
-            //hash the new password for in the database.
+        } else {
+            //Hash the new password
             $password = password_hash($newPassword, PASSWORD_DEFAULT);
 
-            //update the password in the database.
+            //Update the password
             $sql = "UPDATE user SET password =? WHERE id=?";
             $stmt = mysqli_prepare($conn, $sql);
             mysqli_stmt_bind_param($stmt, 'si', $password, $userId);
@@ -35,16 +34,16 @@ if (isset($array)) {
             mysqli_stmt_close($stmt);
             mysqli_close($conn);
 
-            //send a maessage that the password has changed.
+            //Send a message that the password has changed
             $result[] = "password_changed";
             echo json_encode($result);
         }
 
-    }else{
+    } else {
         $error[] = "wrong_old_password";
         echo json_encode($error);
     }
-}else{
+} else {
     echo json_encode("no data send");
 }
 
@@ -73,7 +72,7 @@ function validateFields ($newPassword, $confirmPassword) {
 /**
  * Function to check if the old password is correct.
  */
-function correctOldPassword($conn, $userId, $oldPassword){
+function correctOldPassword($conn, $userId, $oldPassword) {
     $sql = "SELECT password FROM user WHERE id=?";
     $stmt = mysqli_prepare($conn, $sql);
     mysqli_stmt_bind_param($stmt, 'i', $userId);
@@ -84,10 +83,10 @@ function correctOldPassword($conn, $userId, $oldPassword){
     while (mysqli_stmt_fetch($stmt)) {}
 
     
-        if(password_verify($oldPassword, $hashPassword)){
+        if (password_verify($oldPassword, $hashPassword)) {
             return true;
             mysqli_stmt_close($stmt);
-        }else{
+        } else {
             return false;
         }
 }
