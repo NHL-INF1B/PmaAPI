@@ -22,7 +22,7 @@ if (isset($arr)) {
 
     $result = array();
 
-    while (mysqli_stmt_fetch($stmt)) { }
+    while (mysqli_stmt_fetch($stmt)) {}
 
     if (mysqli_stmt_num_rows($stmt) > 0) {
         $result['id'] = $id;

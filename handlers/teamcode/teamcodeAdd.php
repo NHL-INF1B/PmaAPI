@@ -15,19 +15,19 @@ if (isset($arr)) {
     if ($error = false) {
         echo json_encode($error);
     } else {
-        //hier verwijdert hij dat voorstukje wat je hieronder ziet
+        //Delete a part of the path that is unneeded
         $base64 = str_replace("data:application/pdf;base64,", "", $base64);
         //base64 decoderen
         $pdf_decoded = base64_decode($base64);
-        //Nieuw pdf bestand aanmaken en 'write' rechten geven
+        //Create a new pdf & give it 'write' rights
         $pdf = fopen('../../uploads/teamcodes/teamcode' . $projectid . '.pdf', 'w');
-        //Schrijven naar het pdf bestand met de gedecodeerde base64
+        //Write to pdf with decoded base64
         fwrite($pdf, $pdf_decoded);
-        //Bestand weer sluiten en dus opslaan
+        //Close and save the file
         fclose($pdf);
 
-        echo json_encode('done');
+        echo json_encode('Success');
     }
 } else {
-    echo json_encode('No data send');
+    echo json_encode('No data sent');
 }
