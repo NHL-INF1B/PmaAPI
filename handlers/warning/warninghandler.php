@@ -9,8 +9,10 @@ $json = file_get_contents('php://input');
 $arr = json_decode($json, TRUE);
 
 if (isset($arr)) {
-    $sql = "SELECT * FROM warning WHERE project_id = 1";
+    $project_id = $arr['projectId'];
+    $sql = "SELECT * FROM warning WHERE project_id = ?";
     $stmt = mysqli_prepare($conn, $sql);
+    mysqli_stmt_bind_param($stmt, "i", $project_id);
     mysqli_stmt_execute($stmt);
     mysqli_stmt_store_result($stmt);
     mysqli_stmt_bind_result($stmt, $id, $reason, $userId, $projectId);
