@@ -9,7 +9,8 @@ $json = file_get_contents('php://input');
 $arr = json_decode($json, TRUE);
 
 if (isset($arr)) {
-    $project_id = $arr['projectId'];
+    $project_id = htmlentities($arr['projectId']);
+
     $sql = "SELECT * FROM warning WHERE project_id = ?";
     $stmt = mysqli_prepare($conn, $sql);
     mysqli_stmt_bind_param($stmt, "i", $project_id);
@@ -21,13 +22,13 @@ if (isset($arr)) {
     $result = array();
 
     while ($res = mysqli_fetch_assoc($query)) {
-        $result[] = $res;
+        $result[] += $res;
     }
 
     //Send back response (JSON)
     if(!empty($result)){
         echo json_encode($result);
-    } else{
+    } else {
         echo json_encode("NO_DATA");
     }
 
