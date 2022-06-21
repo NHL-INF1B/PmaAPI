@@ -15,12 +15,11 @@ if (isset($array)) {
     $memberValues = array();
     $error = array();
 
-    $query = "SELECT * FROM user WHERE user.id = ?;";
+    $query = "SELECT * FROM user WHERE user.id = ?";
     $stmt = mysqli_prepare($conn, $query) or die("prepare error");
-    mysqli_stmt_bind_param($stmt, "s", $memberId) or die("bind param error");
+    mysqli_stmt_bind_param($stmt, "i", $memberId) or die("bind param error");
     mysqli_stmt_execute($stmt) or die("exucute error");
     mysqli_stmt_bind_result($stmt, $id, $name, $email, $pass, $dateOfBirth, $phoneNumber, $discord) or die("bind result error");
-    // mysqli_stmt_store_results($statement) or die("store result error");
     mysqli_stmt_store_result($stmt);
     mysqli_stmt_num_rows($stmt);
     while (mysqli_stmt_fetch($stmt)) {}
@@ -42,5 +41,5 @@ if (isset($array)) {
         echo json_encode($error);
     }
 }else{
-    echo json_encode("There is no data.");
+    echo json_encode("There is no data");
 }
