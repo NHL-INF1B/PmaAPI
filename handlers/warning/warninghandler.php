@@ -10,6 +10,7 @@ $arr = json_decode($json, TRUE);
 
 if (isset($arr)) {
     $project_id = htmlentities($arr['projectId']);
+    $result = array();
 
     $sql = "SELECT * FROM warning WHERE project_id = ?";
     $stmt = mysqli_prepare($conn, $sql);
@@ -18,11 +19,13 @@ if (isset($arr)) {
     mysqli_stmt_store_result($stmt);
     mysqli_stmt_bind_result($stmt, $id, $reason, $userId, $projectId);
 
-    $query = mysqli_query($conn, $sql);
-    $result = array();
-
-    while ($res = mysqli_fetch_assoc($query)) {
-        $result[] += $res;
+    while (mysqli_stmt_fetch($stmt)) {
+        $userValues = array();
+        $userValues['id'] = $id;
+        $userValues['reason'] = $reason;
+        $userValues['user_id'] = $userId;
+        $userValues['projectId'] = $projectId;
+        array_push($result, $userValues);
     }
 
     //Send back response (JSON)
