@@ -20,7 +20,7 @@ if (isset($arr)) {
 
         //Recieving data from the database
         $query = "  SELECT user.id, user.name, role.name AS rolename
-                    FROM USER
+                    FROM user
                     INNER JOIN projectmember ON projectmember.project_id = ?
                     INNER JOIN role ON role.id = projectmember.role_id
                     WHERE user.id = projectmember.user_id
