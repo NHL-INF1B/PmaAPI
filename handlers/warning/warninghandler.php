@@ -23,8 +23,9 @@ if (isset($arr)) {
         $userValues = array();
         $userValues['id'] = $id;
         $userValues['reason'] = $reason;
-        $userValues['user_id'] = $userId;
+        $userValues['userId'] = $userId;
         $userValues['projectId'] = $projectId;
+        $userValues['warningId'] = $id;
         array_push($result, $userValues);
     }
 
