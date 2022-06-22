@@ -10,8 +10,8 @@ $arr = json_decode($json, TRUE);
 
 if (isset($arr)) {
     $reason = htmlentities($arr['reason']);
-    $user_id = 1;
-    $project_id = 1;
+    $user_id = htmlentities($arr['user_id']);
+    $project_id = htmlentities($arr['project_id']);
 
     //Validate fields
     if ($error = validateFields($reason)) {
