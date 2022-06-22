@@ -11,29 +11,32 @@ $arr = json_decode($json, TRUE);
 if (isset($arr)) {
     $id = htmlentities($arr['id']);
 
-    $sql = "SELECT * FROM warning WHERE id = ?";
+    $sql = "SELECT w.reason, u.name
+            FROM warning AS w
+            JOIN user AS u ON u.id = w.user_id
+            WHERE w.id = ?";
 
     //Sending data to the database
     $stmt = mysqli_prepare($conn, $sql);
     mysqli_stmt_bind_param($stmt, "i", $id);
     mysqli_stmt_execute($stmt);
-    mysqli_stmt_bind_result($stmt, $id, $reason, $user_id, $project_id);
+    mysqli_stmt_bind_result($stmt, $reason, $name);
     mysqli_stmt_store_result($stmt);
 
     $result = array();
 
     while (mysqli_stmt_fetch($stmt)) { }
-
+    
     if (mysqli_stmt_num_rows($stmt) > 0) {
-        $result['id'] = $id;
         $result['reason'] = $reason;
+        $result['name'] = $name;
     } else {
         echo json_encode("No results");
     }
-
+    
     //Close the statement and the connection
-     mysqli_stmt_close($stmt);
-     mysqli_close($conn);
+    mysqli_stmt_close($stmt);
+    mysqli_close($conn);
 
     //Send back response (JSON)
     echo json_encode($result);

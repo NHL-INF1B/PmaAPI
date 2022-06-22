@@ -9,18 +9,16 @@ if (isset($arr)) {
     //Bind data from the input fields to variables
     $id = htmlentities($arr['id']);
     $reason = htmlentities($arr['reason']);
-    $user_id = htmlentities($arr['user_id']);
-    $project_id = htmlentities($arr['project_id']);
 
     //Validate fields
     if ($error = validateFields($reason)) {
         echo json_encode($error);
     } else {
-        $query = "UPDATE warning SET reason = ?, user_id = ? WHERE id = ?";
+        $query = "UPDATE warning SET reason = ? WHERE id = ?";
 
         //Sending data to the database
         $stmt = mysqli_prepare($conn, $query);
-        mysqli_stmt_bind_param($stmt, "sii", $reason, $user_id, $id);
+        mysqli_stmt_bind_param($stmt, "si", $reason, $id);
         mysqli_stmt_execute($stmt);
 
         //All value's that will be send back to the application
