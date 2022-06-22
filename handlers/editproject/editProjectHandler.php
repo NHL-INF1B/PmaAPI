@@ -25,11 +25,8 @@ if (isset($arr)) {
         mysqli_stmt_execute($stmt);
 
         //All values that will be send back to the application
-        $ProjectUpdateValues['id'] = $id;
-        $ProjectUpdateValues['name'] = $name;
-
         //Send back response (JSON)
-        echo json_encode($ProjectUpdateValues);   
+        echo json_encode("data_updated");   
         
         //Close the statement and connection
         mysqli_stmt_close($stmt);
