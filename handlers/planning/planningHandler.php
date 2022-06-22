@@ -12,12 +12,12 @@ if (isset($arr)) {
     // $planning = htmlentities($arr['planning']);
     $weekNummer = htmlentities($arr['week']);
     $activiteit = htmlentities($arr['activiteit']);
-    // $project_id = htmlentities($arr['project_id']);
+    $project_id = htmlentities($arr['project_id']);
 
     // $planning = "test";
     // $activiteit = "test";
     // $week = 1;
-    $project_id = 1;
+    // $project_id = 1;
 
     $query = "INSERT INTO schedule_line (week, activiteit, project_id) VALUES (?,?,?)";
 
