@@ -31,9 +31,9 @@ if (isset($array)) {
         mysqli_stmt_close($stmt);
 
         //Update the points in the database.
-        $sql = "UPDATE projectmember SET reward_points = ? WHERE user_id = ?";
+        $sql = "UPDATE projectmember SET reward_points = ? WHERE user_id = ? AND project_id = ?;";
         $stmt = mysqli_prepare($conn, $sql);
-        mysqli_stmt_bind_param($stmt, 'ii', $pointsAfter, $userId);
+        mysqli_stmt_bind_param($stmt, 'iii', $pointsAfter, $userId, $projectId);
         mysqli_stmt_execute($stmt);
         mysqli_stmt_close($stmt);
         mysqli_close($conn);
