@@ -38,7 +38,11 @@ if (isset($arr)) {
         mysqli_close($conn); 
  
         //Send back response (JSON) 
-        echo json_encode($respond); 
+        if(!empty($respond)){
+            echo json_encode($respond);
+        } else {
+            echo json_encode("NO_DATA");
+        }
     } 
 } else { 
     echo json_encode('No data send'); 
