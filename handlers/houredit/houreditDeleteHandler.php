@@ -21,6 +21,7 @@ if (isset($arr)) {
     //Close the statement and connection
     mysqli_stmt_close($stmt);
     mysqli_close($conn);
+    echo json_encode("data_deleted");
 } else {
     echo json_encode('No data sent');
 }
