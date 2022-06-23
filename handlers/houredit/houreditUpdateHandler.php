@@ -31,15 +31,16 @@ if (isset($arr)) {
         mysqli_stmt_execute($stmt);
 
         //All values that will be send back to the application
-        $HourUpdateValues['id'] = $id;
-        $HourUpdateValues['title'] = $title;
-        $HourUpdateValues['description'] = $description;
-        $HourUpdateValues['date'] = $date;
-        $HourUpdateValues['time_start'] = $time_start;
-        $HourUpdateValues['time_end'] = $time_end;
+        // $HourUpdateValues['id'] = $id;
+        // $HourUpdateValues['title'] = $title;
+        // $HourUpdateValues['description'] = $description;
+        // $HourUpdateValues['date'] = $date;
+        // $HourUpdateValues['time_start'] = $time_start;
+        // $HourUpdateValues['time_end'] = $time_end;
+        // $HourUpdateValues['response'] = "data_updated";
 
         //Send back response (JSON)
-        echo json_encode($HourUpdateValues);   
+        echo json_encode("data_updated");   
         
         //Close the statement and connection
         mysqli_stmt_close($stmt);
@@ -53,24 +54,28 @@ if (isset($arr)) {
  * Function to validate fields
  */
 function validateFields ($title, $description, $date, $time_start, $time_end) {
-    $error = array();
 
     if (!isset($title) || !filter_var($title, FILTER_SANITIZE_SPECIAL_CHARS)) {
-        $error[] = 'title_incorrect';
+        $error = 'title_incorrect';
     }
     if (!isset($description) || !filter_var($description, FILTER_SANITIZE_SPECIAL_CHARS)) {
-        $error[] = 'description_incorrect';
+        $error = 'description_incorrect';
     }
     if (!isset($date) || !filter_var($date, FILTER_SANITIZE_SPECIAL_CHARS)) {
-        $error[] = 'date_incorrect';
+        $error = 'date_incorrect';
     }
     if (!isset($time_start) || !filter_var($time_start, FILTER_SANITIZE_SPECIAL_CHARS)) {
-        $error[] = 'time_start_incorrect';
+        $error = 'time_start_incorrect';
     }
     if (!isset($time_end) || !filter_var($time_end, FILTER_SANITIZE_SPECIAL_CHARS)) {
-        $error[] = 'time_end_incorrect';
+        $error = 'time_end_incorrect';
     }
-
+    if ($time_start > $time_end) {
+        $error = 'times_invalid';
+    }
+    if ($time_start == $time_end) {
+        $error = 'times_equal';
+    }
     if (empty($error)) {
         return false;
     } else {
