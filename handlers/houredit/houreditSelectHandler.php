@@ -43,8 +43,8 @@ if (isset($arr)) {
     }
 
     //Close the statement and the connection
-     mysqli_stmt_close($stmt);
-     mysqli_close($conn);
+    mysqli_stmt_close($stmt);
+    mysqli_close($conn);
 
     //Send back response (JSON)
     echo json_encode($result);
