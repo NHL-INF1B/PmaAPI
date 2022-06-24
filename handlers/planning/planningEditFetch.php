@@ -11,12 +11,12 @@ $arr = json_decode($json, TRUE);
 if (isset($arr)) {
     $scheduleId = htmlentities($arr['scheduleId']);
 
-    $query = "SELECT id, week, activiteit FROM schedule_line WHERE id = ?";
+    $query = "SELECT week, activiteit FROM schedule_line WHERE id = ?";
 
     $stmt = mysqli_prepare($conn, $query);
     mysqli_stmt_bind_param($stmt, "i", $scheduleId);
     mysqli_stmt_execute($stmt);
-    mysqli_stmt_bind_result($stmt, $id, $week, $activity);
+    mysqli_stmt_bind_result($stmt, $week, $activity);
     mysqli_stmt_store_result($stmt);       
 
     $scheduleValues = array();
@@ -26,7 +26,6 @@ if (isset($arr)) {
     //Checking if there are any schedule_lines with the scheduleId
     if (mysqli_stmt_num_rows($stmt) > 0) {
         //All value's that will be send back to the application
-        $scheduleValues['id'] = $id;
         $scheduleValues['week'] = $week;
         $scheduleValues['activity'] = $activity;
     } else {

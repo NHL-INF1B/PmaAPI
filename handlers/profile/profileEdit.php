@@ -17,7 +17,7 @@ if (isset($arr)) {
     $discord = htmlentities($arr['discord']);
 
     //Validate fields
-    if ($error = false) { //Heeft nog validatie nodig! <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+    if ($error = false) {
         echo json_encode($error);
     } else {
         //Sending data to the database
@@ -37,9 +37,5 @@ if (isset($arr)) {
         echo json_encode($respond);
     }
 } else {
-    echo json_encode('No data send');
-}
-
-function validateFields($activity, $week, $id) {
-
+    echo json_encode('No data sent');
 }
