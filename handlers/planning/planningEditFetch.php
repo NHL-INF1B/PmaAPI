@@ -18,11 +18,12 @@ if (isset($arr)) {
     mysqli_stmt_bind_param($stmt, "i", $scheduleId);
     mysqli_stmt_execute($stmt);
     mysqli_stmt_bind_result($stmt, $week, $activity);
-    mysqli_stmt_store_result($stmt);       
+    mysqli_stmt_store_result($stmt);
 
     $scheduleValues = array();
 
-    while (mysqli_stmt_fetch($stmt)) { }
+    while (mysqli_stmt_fetch($stmt)) {
+    }
 
     //Checking if there are any schedule_lines with the scheduleId
     if (mysqli_stmt_num_rows($stmt) > 0) {
@@ -42,4 +43,3 @@ if (isset($arr)) {
 } else {
     echo json_encode('No data sent');
 }
-

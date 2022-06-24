@@ -6,7 +6,7 @@ require_once('../../functions/anti-cors/anticors.php');
  * Getting posted data from the app
  */
 $json = file_get_contents('php://input');
-$arr = json_decode($json, TRUE); 
+$arr = json_decode($json, TRUE);
 
 if (isset($arr)) {
     //Bind data from the input fields to variables

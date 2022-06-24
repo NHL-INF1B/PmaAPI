@@ -73,7 +73,3 @@ function validateFields ($title, $description, $date, $time_start, $time_end) {
         return $error;
     }
 }
-?>
-
-
-

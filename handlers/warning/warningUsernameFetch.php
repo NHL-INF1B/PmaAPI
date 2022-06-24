@@ -24,7 +24,8 @@ if (isset($arr)) {
         mysqli_stmt_bind_param($stmt, "i", $userid);
         mysqli_stmt_execute($stmt);
         mysqli_stmt_bind_result($stmt, $name);
-        while (mysqli_stmt_fetch($stmt)) {}
+        while (mysqli_stmt_fetch($stmt)) {
+        }
 
         //Checking user exists
         if (mysqli_stmt_num_rows($stmt) > 0) {
@@ -43,6 +44,6 @@ if (isset($arr)) {
     echo json_encode('No data send');
 }
 
-function checkIdInDB () {
-    
+function checkIdInDB()
+{
 }

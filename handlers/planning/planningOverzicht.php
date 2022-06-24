@@ -73,4 +73,3 @@ if (isset($arr)) {
 //         echo json_encode($results); 
 //         // var_dump(json_encode($results)); 
 //     } 
-?>

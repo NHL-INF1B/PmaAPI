@@ -6,7 +6,7 @@ require_once('../../functions/anti-cors/anticors.php');
  * Getting posted data from the app
  */
 $json = file_get_contents('php://input');
-$arr = json_decode($json, TRUE); 
+$arr = json_decode($json, TRUE);
 
 if (isset($arr)) {
     //Bind data from the input fields to variables
@@ -34,7 +34,7 @@ if (isset($arr)) {
         mysqli_close($conn);
 
         //Send back response (JSON)
-        echo json_encode($WarningInsertValues);   
+        echo json_encode($WarningInsertValues);
     }
 } else {
     echo json_encode('No data sent');
@@ -43,7 +43,8 @@ if (isset($arr)) {
 /**
  * Function to validate fields
  */
-function validateFields ($reason) {
+function validateFields($reason)
+{
     $error = array();
 
     if (!isset($reason) || !filter_var($reason, FILTER_SANITIZE_SPECIAL_CHARS)) {
@@ -56,6 +57,3 @@ function validateFields ($reason) {
         return $error;
     }
 }
-
-
-

@@ -11,7 +11,7 @@ $array = json_decode($json, TRUE);
 if (isset($array)) {
     //Bind data from the input fields to variables
     $projectId = htmlentities($array['projectId']);
-    
+
     $sql = "SELECT user.id, user.name, projectmember.reward_points 
             FROM user 
             INNER JOIN projectmember ON user.id = projectmember.user_id 
@@ -26,7 +26,7 @@ if (isset($array)) {
 
     $projectMembers = [];
 
-    foreach ($data as $row){
+    foreach ($data as $row) {
         $projectMembers[] = $row;
     }
 

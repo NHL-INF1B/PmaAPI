@@ -24,7 +24,8 @@ if (isset($arr)) {
         mysqli_stmt_bind_param($stmt, "i", $userId);
         mysqli_stmt_execute($stmt);
         mysqli_stmt_bind_result($stmt, $name, $email, $dateOfBirth, $phoneNumber, $discord);
-        while (mysqli_stmt_fetch($stmt)) {}
+        while (mysqli_stmt_fetch($stmt)) {
+        }
 
         //Checking user exists
         if (mysqli_stmt_num_rows($stmt) > 0) {

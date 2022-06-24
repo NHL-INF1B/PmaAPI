@@ -39,7 +39,8 @@ if (isset($arr)) {
 /**
  * Function to get the role id of the voorzitter.
  */
-function getVoorzitterRole($conn) {
+function getVoorzitterRole($conn)
+{
     $role = 'voorzitter';
     $sql = "SELECT id FROM role WHERE name = ?";
     $stmt = mysqli_prepare($conn, $sql) or die("prepare error");
@@ -47,7 +48,8 @@ function getVoorzitterRole($conn) {
     mysqli_stmt_execute($stmt) or die("execute error");
     mysqli_stmt_bind_result($stmt, $id);
     mysqli_stmt_store_result($stmt);
-    while (mysqli_stmt_fetch($stmt)) {}
+    while (mysqli_stmt_fetch($stmt)) {
+    }
     $returnid = $id;
     mysqli_stmt_close($stmt);
 

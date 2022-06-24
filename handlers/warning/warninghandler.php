@@ -31,12 +31,11 @@ if (isset($arr)) {
     }
 
     //Send back response (JSON)
-    if(!empty($result)){
+    if (!empty($result)) {
         echo json_encode($result);
     } else {
         echo json_encode("NO_DATA");
     }
-
 } else {
     echo json_encode('No data send');
 }

@@ -6,7 +6,7 @@ require_once('../../functions/anti-cors/anticors.php');
  * Getting posted data from the app
  */
 $json = file_get_contents('php://input');
-$arr = json_decode($json, TRUE); 
+$arr = json_decode($json, TRUE);
 
 if (isset($arr)) {
     //Bind data from the input fields to variables and set current date & time_start
@@ -14,7 +14,7 @@ if (isset($arr)) {
     $description = htmlentities($arr['description']);
     $date = date("Y-m-d");
     $time_start = date("H:i");
-    $time_end = "00:00";     
+    $time_end = "00:00";
     $userId = htmlentities($arr['userId']);
     $projectId = htmlentities($arr['projectId']);
 
@@ -42,7 +42,7 @@ if (isset($arr)) {
         mysqli_close($conn);
 
         //Send back response (JSON)
-        echo json_encode($HourEditStartValues);   
+        echo json_encode($HourEditStartValues);
     }
 } else {
     echo json_encode('No data sent');
@@ -51,7 +51,8 @@ if (isset($arr)) {
 /**
  * Function to validate fields
  */
-function validateFields ($title, $description) {
+function validateFields($title, $description)
+{
     $error = array();
     if (!isset($title) || !filter_var($title, FILTER_SANITIZE_SPECIAL_CHARS)) {
         $error[] = 'title_timer_incorrect';

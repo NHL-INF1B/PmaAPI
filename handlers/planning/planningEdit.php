@@ -38,6 +38,6 @@ if (isset($arr)) {
     echo json_encode('No data send');
 }
 
-function validateFields($activity, $week, $id) {
-
+function validateFields($activity, $week, $id)
+{
 }

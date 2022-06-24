@@ -21,13 +21,14 @@ if (isset($arr)) {
                     FROM role
                     INNER JOIN projectmember ON projectmember.user_id = ?
                     WHERE role.id = projectmember.role_id";
-                    
+
         $stmt = mysqli_prepare($conn, $query);
         mysqli_stmt_bind_param($stmt, "i", $userId);
         mysqli_stmt_execute($stmt);
         mysqli_stmt_bind_result($stmt, $rolename);
 
-        while (mysqli_stmt_fetch($stmt)) {}
+        while (mysqli_stmt_fetch($stmt)) {
+        }
 
         //Close the statement and connection
         mysqli_stmt_close($stmt);

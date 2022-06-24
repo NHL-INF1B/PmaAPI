@@ -23,14 +23,15 @@ if (isset($arr)) {
 
     $result = array();
 
-    while (mysqli_stmt_fetch($stmt)) { }
+    while (mysqli_stmt_fetch($stmt)) {
+    }
 
     //Formatting the times into HH:MM
     list($hours, $minutes, $seconds) = explode(":", $time_start);
-    $time_start = $hours.":".$minutes;
+    $time_start = $hours . ":" . $minutes;
 
     list($hoursEnd, $minutesEnd, $secondsEnd) = explode(":", $time_end);
-    $time_end = $hoursEnd.":".$minutesEnd;
+    $time_end = $hoursEnd . ":" . $minutesEnd;
 
     if (mysqli_stmt_num_rows($stmt) > 0) {
         $result['id'] = $id;
@@ -52,7 +53,3 @@ if (isset($arr)) {
 } else {
     echo json_encode('No data sent');
 }
-
-
-
-

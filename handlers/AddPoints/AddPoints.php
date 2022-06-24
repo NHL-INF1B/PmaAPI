@@ -12,7 +12,7 @@ if (isset($array)) {
     //Bind data from the input fields to variables
     $userId = htmlentities($array['userId']);
     $projectId = htmlentities($array['projectId']);
-    
+
     $result = array();
 
     //Getting the points the user has before new points
@@ -23,7 +23,8 @@ if (isset($array)) {
     mysqli_stmt_bind_result($stmt, $pointsBefore);
     mysqli_stmt_store_result($stmt);
 
-    while (mysqli_stmt_fetch($stmt)) {}
+    while (mysqli_stmt_fetch($stmt)) {
+    }
 
     //If there is 1 result put the data into variables
     if (mysqli_stmt_num_rows($stmt) == 1) {
@@ -42,6 +43,6 @@ if (isset($array)) {
         $result[] = "points_updated";
         echo json_encode($result);
     }
-}else{
+} else {
     echo json_encode("No data send");
 }

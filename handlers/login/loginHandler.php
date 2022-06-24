@@ -15,7 +15,7 @@ if (isset($arr)) {
 
     if ($error = validateFields($email, $password)) {
         echo json_encode($error);
-    } else  {
+    } else {
         $userValues = array();
         $error = array();
 
@@ -25,7 +25,8 @@ if (isset($arr)) {
         mysqli_stmt_bind_param($stmt, "s", $email);
         mysqli_stmt_execute($stmt);
         mysqli_stmt_bind_result($stmt, $id, $name, $email, $hashedPass, $dateOfBirth, $phoneNumber, $discord);
-        while (mysqli_stmt_fetch($stmt)) {}
+        while (mysqli_stmt_fetch($stmt)) {
+        }
 
         //Checking user credentials
         if (mysqli_stmt_num_rows($stmt) > 0) {
@@ -57,7 +58,8 @@ if (isset($arr)) {
     echo json_encode('No data send');
 }
 
-function validateFields($email, $password) {
+function validateFields($email, $password)
+{
     $error = array();
 
     if (!isset($email) || !filter_var($email, FILTER_SANITIZE_EMAIL)) {

@@ -28,7 +28,7 @@ if (isset($arr)) {
         $userValues[0]['user_id'] = $userId;
         $userValues[0]['project_id'] = $projectId;
         $userValues[0]['role_id'] = $roleId;
-        
+
         mysqli_stmt_close($stmt);
         mysqli_close($conn);
 
