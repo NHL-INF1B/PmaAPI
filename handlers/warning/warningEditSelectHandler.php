@@ -16,7 +16,7 @@ if (isset($arr)) {
             JOIN user AS u ON u.id = w.user_id
             WHERE w.id = ?";
 
-    //Sending data to the database
+    //Selecting data from the database
     $stmt = mysqli_prepare($conn, $sql);
     mysqli_stmt_bind_param($stmt, "i", $id);
     mysqli_stmt_execute($stmt);
