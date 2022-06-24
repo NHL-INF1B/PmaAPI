@@ -37,9 +37,5 @@ if (isset($arr)) {
         echo json_encode($respond);
     }
 } else {
-    echo json_encode('No data send');
-}
-
-function validateFields($activity, $week, $id) {
-
+    echo json_encode('No data sent');
 }
