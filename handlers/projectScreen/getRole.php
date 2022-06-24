@@ -6,11 +6,10 @@ require_once('../../functions/anti-cors/anticors.php');
 $json = file_get_contents('php://input');
 $array = json_decode($json, TRUE);
 $error = array();
-// echo json_encode($array);
 
 //check if there is data send
 if (isset($array)) {
-    //put the info into variables
+    //Bind data from the input fields to variables
     $userId = $array['userId'];
     $projectId = $array['projectId'];
 
@@ -23,9 +22,10 @@ if (isset($array)) {
     mysqli_stmt_bind_result($stmt, $roleId);
     mysqli_stmt_store_result($stmt);
 
-    while(mysqli_stmt_fetch($stmt)) {}
+    while (mysqli_stmt_fetch($stmt)) {
+    }
 
-    if(mysqli_stmt_num_rows($stmt) == 1){
+    if (mysqli_stmt_num_rows($stmt) == 1) {
         $result[0]['roleId'] = $roleId;
 
         mysqli_stmt_close($stmt);
@@ -33,13 +33,10 @@ if (isset($array)) {
 
         //Send back response (JSON)
         echo json_encode($result);
-
-    }else{
+    } else {
         $error[] = "user_id_not_exist";
         echo json_encode($error);
     }
-
-
-}else{
+} else {
     echo json_encode('No data send');
 }

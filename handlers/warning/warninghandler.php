@@ -9,6 +9,7 @@ $json = file_get_contents('php://input');
 $arr = json_decode($json, TRUE);
 
 if (isset($arr)) {
+    //Bind data from the input fields to variables
     $project_id = htmlentities($arr['projectId']);
     $result = array();
 
@@ -30,12 +31,11 @@ if (isset($arr)) {
     }
 
     //Send back response (JSON)
-    if(!empty($result)){
+    if (!empty($result)) {
         echo json_encode($result);
     } else {
         echo json_encode("NO_DATA");
     }
-
 } else {
     echo json_encode('No data send');
 }

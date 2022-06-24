@@ -6,11 +6,14 @@ require_once('../../functions/anti-cors/anticors.php');
  * Getting posted data from the app
  */
 $json = file_get_contents('php://input');
-$arr = json_decode($json, TRUE); 
+$arr = json_decode($json, TRUE);
 
 if (isset($arr)) {
+    //Bind data from the input fields to variablesF
     $id = htmlentities($arr['id']);
 
+
+    //delete everything where project id is the variable $id.
     $sql = "DELETE  p.*, pm.*, i.*, sl.*, ts.*, w.* 
         FROM project AS p 
         LEFT JOIN projectmember AS pm ON pm.project_id = p.id 
@@ -32,6 +35,3 @@ if (isset($arr)) {
 } else {
     echo json_encode('No data sent');
 }
-
-
-

@@ -5,7 +5,8 @@ require_once('../../functions/anti-cors/anticors.php');
 $json = file_get_contents('php://input');
 $array = json_decode($json, TRUE);
 
-if(isset($array))   {
+if (isset($array)) {
+    //Bind data from the input fields to variables
     $projectId = htmlentities($array['projectId']);
 
     $projectValues = array();
@@ -20,21 +21,24 @@ if(isset($array))   {
     mysqli_stmt_bind_result($stmt, $id, $name, $qrcode, $teamcode);
     mysqli_stmt_store_result($stmt);
     // echo mysqli_stmt_num_rows($stmt);
-    while(mysqli_stmt_fetch($stmt)){}
+    while (mysqli_stmt_fetch($stmt)) {
+    }
 
-    if(mysqli_stmt_num_rows($stmt)  == 1) {
+    //if there is 1 result
+    if (mysqli_stmt_num_rows($stmt)  == 1) {
+        //add the data to the array.
         $projectValues[0]['id'] = $id;
         $projectValues[0]['name'] = $name;
         $projectValues[0]['newQrcode'] = $qrcode;
-        
+
         mysqli_stmt_close($stmt);
         mysqli_close($conn);
-        
+
         echo json_encode($projectValues);
-    }else{
+    } else {
         $error[] = 'project_not_exists';
         echo json_encode($error);
     }
-}else{
+} else {
     echo json_encode("No data send.");
 }

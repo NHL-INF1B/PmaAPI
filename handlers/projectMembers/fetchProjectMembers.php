@@ -9,11 +9,12 @@ $json = file_get_contents('php://input');
 $arr = json_decode($json, TRUE);
 
 if (isset($arr)) {
+    //Bind data from the input fields to variables
     $userId = htmlentities($arr['userId']);
     $projectId = htmlentities($arr['projectId']);
 
     //Validate fields
-    if ($error = false) { //Heeft nog validatie nodig! <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+    if ($error = false) {
         echo json_encode($error);
     } else {
         $respond = array();
@@ -25,7 +26,7 @@ if (isset($arr)) {
                     INNER JOIN role ON role.id = projectmember.role_id
                     WHERE user.id = projectmember.user_id
                     AND NOT user.id = ?";
-                    
+
         $stmt = mysqli_prepare($conn, $query);
         mysqli_stmt_bind_param($stmt, "ii", $projectId, $userId);
         mysqli_stmt_execute($stmt);
@@ -43,7 +44,7 @@ if (isset($arr)) {
         mysqli_close($conn);
 
         //Send back response (JSON)
-        if(!empty($respond)){
+        if (!empty($respond)) {
             echo json_encode($respond);
         } else {
             echo json_encode("NO_DATA");

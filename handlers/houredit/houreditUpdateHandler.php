@@ -30,15 +30,6 @@ if (isset($arr)) {
         mysqli_stmt_bind_param($stmt, "sssssi", $title, $description, $date, $time_start, $time_end, $id);
         mysqli_stmt_execute($stmt);
 
-        //All values that will be send back to the application
-        // $HourUpdateValues['id'] = $id;
-        // $HourUpdateValues['title'] = $title;
-        // $HourUpdateValues['description'] = $description;
-        // $HourUpdateValues['date'] = $date;
-        // $HourUpdateValues['time_start'] = $time_start;
-        // $HourUpdateValues['time_end'] = $time_end;
-        // $HourUpdateValues['response'] = "data_updated";
-
         //Send back response (JSON)
         echo json_encode("data_updated");   
         
@@ -82,7 +73,3 @@ function validateFields ($title, $description, $date, $time_start, $time_end) {
         return $error;
     }
 }
-?>
-
-
-

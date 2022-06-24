@@ -9,6 +9,7 @@ $json = file_get_contents('php://input');
 $arr = json_decode($json, TRUE);
 
 if (isset($arr)) {
+    //Bind data from the input fields to variables
     $id = htmlentities($arr['id']);
 
     $sql = "SELECT w.reason, u.name
@@ -25,15 +26,16 @@ if (isset($arr)) {
 
     $result = array();
 
-    while (mysqli_stmt_fetch($stmt)) { }
-    
+    while (mysqli_stmt_fetch($stmt)) {
+    }
+
     if (mysqli_stmt_num_rows($stmt) > 0) {
         $result['reason'] = $reason;
         $result['name'] = $name;
     } else {
         echo json_encode("No results");
     }
-    
+
     //Close the statement and the connection
     mysqli_stmt_close($stmt);
     mysqli_close($conn);
@@ -43,7 +45,3 @@ if (isset($arr)) {
 } else {
     echo json_encode('No data sent');
 }
-
-
-
-

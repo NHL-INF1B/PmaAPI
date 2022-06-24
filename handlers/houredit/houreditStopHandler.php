@@ -3,7 +3,7 @@ require_once('../../functions/database/dbconnect.php');
 require_once('../../functions/anti-cors/anticors.php');
 
 $json = file_get_contents('php://input');
-$arr = json_decode($json, TRUE); 
+$arr = json_decode($json, TRUE);
 
 if (isset($arr)) {
     //Bind data from the input fields to variables and set time_end
@@ -12,6 +12,8 @@ if (isset($arr)) {
     $userId = htmlentities($arr['userId']);
     $projectId = htmlentities($arr['projectId']);
 
+
+    //update the houredit
     $query = "UPDATE timesheet SET time_end = ? WHERE id = ?";
 
     //Sending data to the database
@@ -28,8 +30,7 @@ if (isset($arr)) {
     mysqli_close($conn);
 
     //Send back response (JSON)
-    echo json_encode($HourEditStopValues);   
+    echo json_encode($HourEditStopValues);
 } else {
     echo json_encode('No data sent');
 }
-  

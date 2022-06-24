@@ -6,9 +6,10 @@ require_once('../../functions/anti-cors/anticors.php');
  * Getting posted data from the app
  */
 $json = file_get_contents('php://input');
-$arr = json_decode($json, TRUE); // returns array("username" => "stefan") etc.
+$arr = json_decode($json, TRUE);
 
 if (isset($arr)) {
+    //Bind data from the input fields to variables
     $name = htmlentities($arr['name']);
     $email = htmlentities($arr['email']);
     $dateOfBirth = htmlentities($arr['dateOfBirth']);
@@ -27,24 +28,24 @@ if (isset($arr)) {
             $password = password_hash($password, PASSWORD_DEFAULT);
             $phoneNumber = "";
             $discord = "";
-    
+
             //Sending data to the database
             $query = "INSERT INTO user (name, email, password, dateOfBirth, phoneNumber, discord) VALUES (?,?,?,?,?,?)";
             $stmt = mysqli_prepare($conn, $query);
             mysqli_stmt_bind_param($stmt, "ssssss", $name, $email, $password, $dateOfBirth, $phoneNumber, $discord);
             mysqli_stmt_execute($stmt);
-            
+
             //All value's that will be send back to the application
             $userValues[0]['id'] = mysqli_insert_id($conn);
             $userValues[0]['name'] = $name;
             $userValues[0]['email'] = $email;
             $userValues[0]['dateOfBirth'] = $dateOfBirth;
             // $userValues['password'] = $password; //Probaly won't send...
-    
+
             //Close the statement and connection
             mysqli_stmt_close($stmt);
             mysqli_close($conn);
-    
+
             //Send back response (JSON)
             echo json_encode($userValues);
         }
@@ -56,7 +57,8 @@ if (isset($arr)) {
 /**
  * Function to validate fields
  */
-function validateFields ($name, $email, $dateOfBirth, $password, $confirmPassword) {
+function validateFields($name, $email, $dateOfBirth, $password, $confirmPassword)
+{
     $error = array();
 
     if (!isset($name) || !filter_var($name, FILTER_SANITIZE_SPECIAL_CHARS) || !preg_match('/^[A-Za-z][A-Za-z0-9]{0,49}$/', $name)) {
@@ -89,7 +91,8 @@ function validateFields ($name, $email, $dateOfBirth, $password, $confirmPasswor
 /**
  * Function to check if user already exists in database
  */
-function checkEmailInDataBase($conn, $email) {
+function checkEmailInDataBase($conn, $email)
+{
     $error = array();
 
     $query = "SELECT * FROM user WHERE email = ?";

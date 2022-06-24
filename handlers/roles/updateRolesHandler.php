@@ -7,9 +7,10 @@ require_once('../../functions/anti-cors/anticors.php');
  */
 
 $json = file_get_contents('php://input');
-$arr = json_decode($json, TRUE); // returns array("username" => "stefan") etc.
+$arr = json_decode($json, TRUE);
 
 if (isset($arr)) {
+    //Bind data from the input fields to variables
     $value = htmlentities($arr['value']);
 
     if ($error = validateFields($value)) {
@@ -27,7 +28,7 @@ if (isset($arr)) {
         $userValues[0]['user_id'] = $userId;
         $userValues[0]['project_id'] = $projectId;
         $userValues[0]['role_id'] = $roleId;
-        
+
         mysqli_stmt_close($stmt);
         mysqli_close($conn);
 

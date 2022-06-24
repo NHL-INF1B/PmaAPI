@@ -9,10 +9,10 @@ $error = array();
 
 //Check if there is data send
 if (isset($array)) {
-    //Pput the info into variables
+    //Bind data from the input fields to variables
     $userId = htmlentities($array['userId']);
     $projectId = htmlentities($array['projectId']);
-    
+
     $result = array();
 
     //Getting the points the user has before new points
@@ -23,7 +23,8 @@ if (isset($array)) {
     mysqli_stmt_bind_result($stmt, $pointsBefore);
     mysqli_stmt_store_result($stmt);
 
-    while (mysqli_stmt_fetch($stmt)) {}
+    while (mysqli_stmt_fetch($stmt)) {
+    }
 
     //If there is 1 result put the data into variables
     if (mysqli_stmt_num_rows($stmt) == 1) {
@@ -32,7 +33,7 @@ if (isset($array)) {
 
         //Update the points in the database.
         $sql = "UPDATE projectmember SET reward_points = ? WHERE user_id = ? AND project_id = ?;";
-        $stmt = mysqli_prepare($conn, $sql);
+        $stmt = mysqli_prepare($conn, $sql) or die;
         mysqli_stmt_bind_param($stmt, 'iii', $pointsAfter, $userId, $projectId);
         mysqli_stmt_execute($stmt);
         mysqli_stmt_close($stmt);
@@ -42,6 +43,6 @@ if (isset($array)) {
         $result[] = "points_updated";
         echo json_encode($result);
     }
-}else{
+} else {
     echo json_encode("No data send");
 }

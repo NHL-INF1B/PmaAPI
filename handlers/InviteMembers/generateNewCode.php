@@ -6,7 +6,10 @@ $json = file_get_contents('php://input');
 $array = json_decode($json, TRUE);
 
 if (isset($array)) {
+    //Bind data from the input fields to variables
     $projectId = htmlentities($array['projectId']);
+
+    //generate a random integer for the qr code
     $qrcode = rand();
 
     $projectValues = array();
@@ -30,8 +33,9 @@ if (isset($array)) {
     mysqli_stmt_execute($stmt);
     mysqli_stmt_bind_result($stmt, $id, $name, $qrcode, $teamcode);
     mysqli_stmt_store_result($stmt);
-    
-    while (mysqli_stmt_fetch($stmt)) {}
+
+    while (mysqli_stmt_fetch($stmt)) {
+    }
 
     //if there is 1 result put the data into variables
     if (mysqli_stmt_num_rows($stmt) == 1) {
@@ -43,10 +47,9 @@ if (isset($array)) {
         mysqli_close($conn);
 
         echo json_encode($projectValues);
-
     } else {
         echo json_encode("There is no data.");
     }
-}else{
+} else {
     echo json_encode("No data send.");
 }
