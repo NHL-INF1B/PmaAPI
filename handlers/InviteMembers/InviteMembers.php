@@ -6,6 +6,7 @@ $json = file_get_contents('php://input');
 $array = json_decode($json, TRUE);
 
 if(isset($array))   {
+    //Bind data from the input fields to variables
     $projectId = htmlentities($array['projectId']);
 
     $projectValues = array();
@@ -22,7 +23,9 @@ if(isset($array))   {
     // echo mysqli_stmt_num_rows($stmt);
     while(mysqli_stmt_fetch($stmt)){}
 
+    //if there is 1 result
     if(mysqli_stmt_num_rows($stmt)  == 1) {
+        //add the data to the array.
         $projectValues[0]['id'] = $id;
         $projectValues[0]['name'] = $name;
         $projectValues[0]['newQrcode'] = $qrcode;

@@ -22,6 +22,7 @@ if (isset($arr)) {
     if ($error = validateFields($title, $description, $date, $time_start, $time_end)) {
         echo json_encode($error);
     } else {
+        //insert a new houredit.
         $HourEditValues = array();
         $query = "INSERT INTO timesheet (title, description, date, time_start, time_end, user_id, project_id) VALUES (?,?,?,?,?,?,?)";
 

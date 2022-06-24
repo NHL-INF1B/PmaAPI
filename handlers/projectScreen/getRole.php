@@ -6,11 +6,10 @@ require_once('../../functions/anti-cors/anticors.php');
 $json = file_get_contents('php://input');
 $array = json_decode($json, TRUE);
 $error = array();
-// echo json_encode($array);
 
 //check if there is data send
 if (isset($array)) {
-    //put the info into variables
+    //Bind data from the input fields to variables
     $userId = $array['userId'];
     $projectId = $array['projectId'];
 

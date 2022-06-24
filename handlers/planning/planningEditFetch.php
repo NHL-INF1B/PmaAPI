@@ -9,6 +9,7 @@ $json = file_get_contents('php://input');
 $arr = json_decode($json, TRUE);
 
 if (isset($arr)) {
+    //Bind data from the input fields to variables
     $scheduleId = htmlentities($arr['scheduleId']);
 
     $query = "SELECT id, week, activiteit FROM schedule_line WHERE id = ?";

@@ -6,9 +6,10 @@ require_once('../../functions/anti-cors/anticors.php');
  * Getting posted data from the app
  */
 $json = file_get_contents('php://input');
-$arr = json_decode($json, TRUE); // returns array("projectName" => "PMA") etc.
+$arr = json_decode($json, TRUE);
 
 if (isset($arr)) {
+    //Bind data from the input fields to variables
     $name = htmlentities($arr['name']);
     $userid = htmlentities($arr['userid']);
     $qrcode = rand();
@@ -35,6 +36,9 @@ if (isset($arr)) {
     mysqli_close($conn);
 }
 
+/**
+ * Function to get the role id of the voorzitter.
+ */
 function getVoorzitterRole($conn) {
     $role = 'voorzitter';
     $sql = "SELECT id FROM role WHERE name = ?";

@@ -12,6 +12,8 @@ if (isset($arr)) {
     $userId = htmlentities($arr['userId']);
     $projectId = htmlentities($arr['projectId']);
 
+
+    //update the houredit
     $query = "UPDATE timesheet SET time_end = ? WHERE id = ?";
 
     //Sending data to the database

@@ -9,10 +9,11 @@ $json = file_get_contents('php://input');
 $arr = json_decode($json, TRUE); 
 
 if (isset($arr)) {
+    //Bind data from the input fields to variables
     $id = htmlentities($arr['scheduleId']);
 
     //Validate fields
-    if ($error = false) { //Heeft nog validatie nodig! <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+    if ($error = false) {
         echo json_encode($error);
     } else {
         //Sending data to the database

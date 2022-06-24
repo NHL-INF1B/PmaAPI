@@ -9,8 +9,10 @@ $json = file_get_contents('php://input');
 $arr = json_decode($json, TRUE); 
 
 if (isset($arr)) {
+    //Bind data from the input fields to variables
     $id = htmlentities($arr['id']);
 
+    //delete the houredit.
     $sql = "DELETE FROM timesheet WHERE id = ?";
 
     //Sending data to the database

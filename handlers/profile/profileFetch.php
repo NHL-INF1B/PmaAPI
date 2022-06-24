@@ -12,7 +12,7 @@ if (isset($arr)) {
     $userId = htmlentities($arr['userId']);
 
     //Validate fields
-    if ($error = false) { //Heeft nog validatie nodig! <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+    if ($error = false) {
         echo json_encode($error);
     } else {
         $error = array();

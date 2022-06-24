@@ -6,7 +6,7 @@ $json = file_get_contents("php://input");
 $arr = json_decode($json, TRUE);
 
 if(isset($arr)){
-
+    //Bind data from the input fields to variables
     $userId = htmlentities($arr["userId"]);
     $projectId = htmlentities($arr["projectId"]);
 
@@ -22,7 +22,7 @@ if(isset($arr)){
         die();
     }
     
-    
+    //get the result and place them in an array.
     $res = mysqli_stmt_get_result($stmt);
     $result = mysqli_fetch_all($res, MYSQLI_ASSOC);
     

@@ -7,9 +7,10 @@ require_once('../../functions/anti-cors/anticors.php');
  */
 
 $json = file_get_contents('php://input');
-$arr = json_decode($json, TRUE); // returns array("username" => "stefan") etc.
+$arr = json_decode($json, TRUE);
 
 if (isset($arr)) {
+    //Bind data from the input fields to variables
     $value = htmlentities($arr['value']);
 
     if ($error = validateFields($value)) {

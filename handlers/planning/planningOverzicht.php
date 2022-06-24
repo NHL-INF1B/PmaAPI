@@ -6,13 +6,14 @@ require_once('../../functions/anti-cors/anticors.php');
  * Getting posted data from the app 
  */ 
 $json = file_get_contents('php://input'); 
-$arr = json_decode($json, TRUE); // returns array("username" => "stefan") etc. 
+$arr = json_decode($json, TRUE);
  
 if (isset($arr)) { 
+    //Bind data from the input fields to variables
     $projectid = htmlentities($arr['projectid']); 
  
     //Validate fields 
-    if ($error = false) { //Heeft nog validatie nodig! <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< 
+    if ($error = false) {
         echo json_encode($error); 
     } else { 
         $respond = array(); 

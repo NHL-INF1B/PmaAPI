@@ -6,7 +6,7 @@ require_once('../../functions/anti-cors/anticors.php');
  * Getting posted data from the app
  */
 $json = file_get_contents('php://input');
-$arr = json_decode($json, TRUE); // returns array("username" => "stefan") etc.
+$arr = json_decode($json, TRUE);
 
 if (isset($arr)) {
     $id = htmlentities($arr['id']);
@@ -17,7 +17,7 @@ if (isset($arr)) {
     $discord = htmlentities($arr['discord']);
 
     //Validate fields
-    if ($error = false) { //Heeft nog validatie nodig! <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+    if ($error = false) {
         echo json_encode($error);
     } else {
         //Sending data to the database

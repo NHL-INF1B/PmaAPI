@@ -6,7 +6,10 @@ $json = file_get_contents('php://input');
 $array = json_decode($json, TRUE);
 
 if (isset($array)) {
+    //Bind data from the input fields to variables
     $projectId = htmlentities($array['projectId']);
+
+    //generate a random integer for the qr code
     $qrcode = rand();
 
     $projectValues = array();

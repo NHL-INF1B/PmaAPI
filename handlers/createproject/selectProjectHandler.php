@@ -9,6 +9,7 @@ $json = file_get_contents('php://input');
 $arr = json_decode($json, TRUE);
 
 if (isset($arr)) {
+    //Bind data from the input fields to variables
     $id = htmlentities($arr['id']);
 
     $sql = "SELECT * FROM project WHERE id = ?";
@@ -24,7 +25,9 @@ if (isset($arr)) {
 
     while (mysqli_stmt_fetch($stmt)) {}
 
+    //if there are more than 0 results
     if (mysqli_stmt_num_rows($stmt) > 0) {
+        //place the info from the database into an array.
         $result['id'] = $id;
         $result['name'] = $name;
         $result['qrcode'] = $qrcode;

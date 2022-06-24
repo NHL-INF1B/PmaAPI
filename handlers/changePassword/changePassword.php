@@ -9,7 +9,7 @@ $error = array();
 
 //Check if there is data send
 if (isset($array)) {
-    //Put the info into variables
+    //Bind data from the input fields to variables
     $userId = htmlentities($array['id']);
     $oldPassword = htmlentities($array['oldPassword']);
     $newPassword = htmlentities($array['newPassword']);
@@ -38,7 +38,6 @@ if (isset($array)) {
             $result[] = "password_changed";
             echo json_encode($result);
         }
-
     } else {
         $error[] = "wrong_old_password";
         echo json_encode($error);
@@ -50,7 +49,8 @@ if (isset($array)) {
 /**
  * Function to validate fields
  */
-function validateFields ($newPassword, $confirmPassword) {
+function validateFields($newPassword, $confirmPassword)
+{
     $error = array();
     if (!isset($newPassword) || !filter_var($newPassword, FILTER_SANITIZE_SPECIAL_CHARS) || !preg_match('/^(?=.*[!@#$%^&*])[A-Za-z0-9!@#$%^&*]{6,254}+$/', $newPassword)) {
         $error[] = 'password_incorrect';
@@ -72,7 +72,8 @@ function validateFields ($newPassword, $confirmPassword) {
 /**
  * Function to check if the old password is correct.
  */
-function correctOldPassword($conn, $userId, $oldPassword) {
+function correctOldPassword($conn, $userId, $oldPassword)
+{
     $sql = "SELECT password FROM user WHERE id=?";
     $stmt = mysqli_prepare($conn, $sql);
     mysqli_stmt_bind_param($stmt, 'i', $userId);
@@ -80,13 +81,14 @@ function correctOldPassword($conn, $userId, $oldPassword) {
     mysqli_stmt_bind_result($stmt, $hashPassword);
     mysqli_stmt_store_result($stmt);
 
-    while (mysqli_stmt_fetch($stmt)) {}
+    while (mysqli_stmt_fetch($stmt)) {
+    }
 
-    
-        if (password_verify($oldPassword, $hashPassword)) {
-            return true;
-            mysqli_stmt_close($stmt);
-        } else {
-            return false;
-        }
+
+    if (password_verify($oldPassword, $hashPassword)) {
+        return true;
+        mysqli_stmt_close($stmt);
+    } else {
+        return false;
+    }
 }

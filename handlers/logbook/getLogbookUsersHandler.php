@@ -6,6 +6,7 @@ $json = file_get_contents("php://input");
 $arr = json_decode($json, TRUE);
 
 if(isset($arr)){
+    //Bind data from the input fields to variables
     $projectId = htmlentities($arr["projectId"]);
 
     $query = "SELECT u.id, u.name FROM projectmember as pm INNER JOIN user as u ON pm.user_id = u.id WHERE pm.project_id = ?";
@@ -19,7 +20,7 @@ if(isset($arr)){
         echo "DB error: " . mysqli_error($conn);
     }
     
-    
+    //get the results and place them in an array.
     $res = mysqli_stmt_get_result($stmt);
     $result = mysqli_fetch_all($res, MYSQLI_ASSOC);
     

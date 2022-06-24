@@ -6,6 +6,7 @@ $json = file_get_contents("php://input");
 $arr = json_decode($json, TRUE);
 
 if(isset($arr)){
+    //Bind data from the input fields to variables
     $userId = htmlentities($arr["userId"]);
 
     $query = "SELECT `name` FROM user WHERE id = ?";
@@ -19,7 +20,7 @@ if(isset($arr)){
         echo "DB error: " . mysqli_error($conn);
     }
     
-    
+    //get the data and place the in an array.
     $res = mysqli_stmt_get_result($stmt);
     $result = mysqli_fetch_array($res, MYSQLI_ASSOC);
     

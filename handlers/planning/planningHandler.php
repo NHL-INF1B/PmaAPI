@@ -10,6 +10,7 @@ $arr = json_decode($json, TRUE);
 
 if (isset($arr)) {
 
+    //Bind data from the input fields to variables
     $weekNummer = htmlentities($arr['week']);
     $activiteit = htmlentities($arr['activiteit']);
     $project_id = htmlentities($arr['project_id']);

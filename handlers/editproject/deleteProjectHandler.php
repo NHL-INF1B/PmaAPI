@@ -9,8 +9,11 @@ $json = file_get_contents('php://input');
 $arr = json_decode($json, TRUE); 
 
 if (isset($arr)) {
+    //Bind data from the input fields to variables
     $id = htmlentities($arr['id']);
 
+
+    //delete everything where project id is the variable $id.
     $sql = "DELETE  p.*, pm.*, i.*, sl.*, ts.*, w.* 
         FROM project AS p 
         LEFT JOIN projectmember AS pm ON pm.project_id = p.id 

@@ -9,12 +9,13 @@ $json = file_get_contents('php://input');
 $array = json_decode($json, TRUE);
 
 if (isset($array)) {
+    //Bind data from the input fields to variables
     $memberId = $array["memberId"];
-    // echo json_encode($memberId);
     
     $memberValues = array();
     $error = array();
 
+    //]requesting data from the database
     $query = "SELECT * FROM user WHERE user.id = ?";
     $stmt = mysqli_prepare($conn, $query) or die("prepare error");
     mysqli_stmt_bind_param($stmt, "i", $memberId) or die("bind param error");
@@ -24,7 +25,9 @@ if (isset($array)) {
     mysqli_stmt_num_rows($stmt);
     while (mysqli_stmt_fetch($stmt)) {}
 
+    //if there are more than 0 results.
     if(mysqli_stmt_num_rows($stmt) > 0)    {
+        //place the data into an array.
         $memberValues[0]['id'] = $id;
         $memberValues['name'] = $name;
         $memberValues['email'] = $email;
@@ -35,6 +38,7 @@ if (isset($array)) {
         mysqli_stmt_close($stmt);
         mysqli_close($conn);
         
+        //Send back response (JSON)
         echo json_encode($memberValues);
     }else{
         $error[] = 'user_not_exists';
